@@ -30,6 +30,10 @@ struct DashboardView: View {
                     }
                 }
             }
+            .toolbar {
+                
+            }
+            .toolbarVisibility(.hidden)
         } else {
             VStack {
                 Text("notLoggedIn")

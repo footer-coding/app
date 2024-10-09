@@ -13,47 +13,46 @@ struct SessionsView: View {
     
     @ObservedObject private var clerk = Clerk.shared
     
-    init(){
-        UITableView.appearance().backgroundColor = .clear
-    }
-    
-    private func getSessionsFromClerk() {
+//    init() {
+//        UITableView.appearance().backgroundColor = .clear
+//    }
+
+    private func loadSessions() {
         Task {
-            do {
-                try self.sessions = await clerk.user?.getSessions() ?? []
-            } catch {
-                print("Nie dziala")
+            if let userSessions = try? await Clerk.shared.user?.getSessions() {
+                sessions = userSessions
             }
         }
     }
     
     var body: some View {
         HStack {
-            HStack {
-                if sessions != [] {
-                    Form {
-                        ForEach(sessions) { session in
-                            HStack {
+            NavigationStack {
+                HStack {
+                    if (sessions != []) {
+                        Form {
+                            ForEach(sessions) { session in
                                 HStack {
-                                    Label(session.latestActivity?.browserName ?? "Noname", systemImage: "macbook.and.iphone")
-                                        .accessibility(label: Text(session.latestActivity?.browserName ?? "Noname"))
-                                }
-                                
-                                Spacer()
-                                
-                                HStack {
-                                    Text(session.latestActivity?.ipAddress ?? "No IP address")
-                                        .accessibility(label: Text(session.latestActivity?.ipAddress ?? "No IP address"))
+                                    HStack {
+                                        Label(session.latestActivity?.browserName ?? "Noname", systemImage: "macbook.and.iphone")
+                                            .accessibility(label: Text(session.latestActivity?.browserName ?? "Noname"))
+                                    }
+                                    
+                                    Spacer()
+                                    
+                                    HStack {
+                                        Text(session.latestActivity?.ipAddress ?? "No IP address")
+                                            .accessibility(label: Text(session.latestActivity?.ipAddress ?? "No IP address"))
+                                    }
                                 }
                             }
                         }
-                        
+                    } else {
+                        Text("Loading...")
                     }
-                } else {
-                    Text("Loading...")
+                }.onAppear {
+                    loadSessions()
                 }
-            }.task() {
-                try? self.sessions = await clerk.user?.getSessions() ?? []
             }
         }
         .navigationBarTitle("Devices", displayMode: .inline)

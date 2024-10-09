@@ -19,8 +19,7 @@ struct SettingsView: View {
     @State private var email: String = ""
     @State private var phoneNumber: String = ""
     @State private var image: String = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.z4no5tqp2ryBdMMD5NU9OgHaEv%26pid%3DApi&f=1&ipt=3ec8c522e4441118787208c74dbb632e38e9ca30ce05a05ef78d68e31be94a28&ipo=images"
-    
-    
+   
     @State var isShowPicker: Bool = false
     @State var isImagePicked: Bool = false
     
@@ -127,6 +126,7 @@ struct SettingsView: View {
                 }
             }
         }
+        .navigationBarHidden(false)
     }
     
     private var formHeader: some View {
@@ -169,6 +169,21 @@ struct SettingsView: View {
     var body: some View {
         if let user = clerk.user {
             VStack {
+                HStack {
+                    Button(action: {
+                        showEditSheet.toggle()
+                    }) {
+                        Text("Edit")
+                    }.padding(.leading, 20)
+
+                   
+                    Spacer()
+                    
+                    Button("Sign Out") {
+                        Task { try? await clerk.signOut() }
+                    }.padding(.trailing, 20)
+                }
+                
                 Form {
                     Section(header: formHeader
                         .textCase(nil)
@@ -220,6 +235,7 @@ struct SettingsView: View {
                 phoneNumber = clerk.user?.phoneNumbers[0].phoneNumber ?? "No phone number"
                 image = clerk.user?.imageUrl ?? ""
             }
+            .background(Color("BackgroundColor"))
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Sign Out ") {
@@ -248,6 +264,7 @@ struct SettingsView: View {
                 })
                 Button("Cancel", role: .cancel, action: {})
             })
+            .toolbarVisibility(.visible)
         } else {
             VStack {
                 Text("notLoggedIn")

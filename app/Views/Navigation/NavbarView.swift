@@ -10,7 +10,7 @@ import SwiftUI
 struct NavbarView: View {
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             TabView() {
                 DashboardView()
                     .tabItem {
