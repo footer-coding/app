@@ -1,0 +1,202 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "" : {
+
+    },
+    " Edit" : {
+
+    },
+    "accountRegistered" : {
+
+    },
+    "accountRegisteredContent" : {
+
+    },
+    "App developers" : {
+
+    },
+    "App developers team" : {
+
+    },
+    "Cancel" : {
+
+    },
+    "Change avatar" : {
+
+    },
+    "Clerk iOS" : {
+
+    },
+    "Coding Night 2024" : {
+
+    },
+    "Contact" : {
+
+    },
+    "continueButton" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue"
+          }
+        }
+      }
+    },
+    "dashboardButton" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dashboard"
+          }
+        }
+      }
+    },
+    "dawda" : {
+
+    },
+    "Devices" : {
+
+    },
+    "Do you want to email us?" : {
+
+    },
+    "Don't have an account? Sign Up" : {
+
+    },
+    "Done" : {
+
+    },
+    "Edit account" : {
+
+    },
+    "email" : {
+
+    },
+    "Email" : {
+
+    },
+    "Footer" : {
+
+    },
+    "Hello, World!" : {
+
+    },
+    "kube3qq" : {
+
+    },
+    "Licences" : {
+
+    },
+    "Loading..." : {
+
+    },
+    "logIn" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log in"
+          }
+        }
+      }
+    },
+    "loginButton" : {
+      "comment" : "loginButton"
+    },
+    "loginTitle" : {
+
+    },
+    "Made with ❤️ and ☕️" : {
+
+    },
+    "notLoggedIn" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not logged in"
+          }
+        }
+      }
+    },
+    "OK" : {
+
+    },
+    "onboarding1Content" : {
+
+    },
+    "onboarding1Title" : {
+
+    },
+    "onboarding2Content" : {
+
+    },
+    "onboarding2Title" : {
+
+    },
+    "onboarding3Content" : {
+
+    },
+    "onboarding3Title" : {
+
+    },
+    "onboardingTitle" : {
+
+    },
+    "Open-source licences" : {
+
+    },
+    "password" : {
+
+    },
+    "Payments" : {
+
+    },
+    "Pengwius" : {
+
+    },
+    "Phone number" : {
+
+    },
+    "Phone numer" : {
+
+    },
+    "Sajms0n" : {
+
+    },
+    "settingsButton" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
+      }
+    },
+    "Sign Out" : {
+
+    },
+    "Sign Out " : {
+
+    },
+    "ToasterCoder44" : {
+
+    },
+    "Username" : {
+
+    },
+    "Your email address" : {
+
+    },
+    "Your phone number" : {
+
+    }
+  },
+  "version" : "1.0"
+}

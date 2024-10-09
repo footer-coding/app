@@ -6,20 +6,32 @@
 //
 
 import SwiftUI
+import ClerkSDK
 
 @main
 struct appApp: App {
-    @AppStorage("isLogged") private var isLogged: Bool = false
     @AppStorage("needsAppOnboarding") private var needsAppOnboarding: Bool = true
+    
+    @ObservedObject private var clerk = Clerk.shared
     
     var body: some Scene {
         WindowGroup {
             if(needsAppOnboarding) {
                 OnboardingView()
             } else {
-                NavigationView()
-                    .onAppear {
+                ZStack {
+                    if clerk.loadingState == .notLoaded {
+                        Text("Loading...")
+                    } else {
+                        NavbarView()
+                            .onAppear {
+                            }
+
                     }
+                }.task {
+                    clerk.configure(publishableKey: "pk_test_ZmFuY3ktbWFuYXRlZS02OS5jbGVyay5hY2NvdW50cy5kZXYk")
+                    try? await clerk.load()
+                }
             }
         }
     }

@@ -6,31 +6,18 @@
 //
 
 import SwiftUI
+import ClerkSDK
 
 struct DashboardView: View {
     @State private var showModal = false
-    @AppStorage("isLogged") private var isLogged: Bool = false
+    
+    @ObservedObject private var clerk = Clerk.shared
     
     public let cornerRadius: CGFloat = 12
     public let cellBackground: Color = Color.gray.opacity(0.2)
     
-    init() {
-        if(isLogged == true){
-        }
-    }
-    
     var body: some View {
-        if(isLogged){
-            VStack {
-                Text("notLoggedIn")
-                Button("logIn") {self.showModal = true}
-                    .sheet(isPresented: $showModal, onDismiss: {
-                                print(self.showModal)
-                            }) {
-                                LoginView()
-                            }
-            }.padding()
-        } else {
+        if let user = clerk.user {
             ScrollView {
                 PullToRefresh(coordinateSpaceName: "pullToRefresh") {
                     print("Refreshing..")
@@ -38,8 +25,18 @@ struct DashboardView: View {
                 
                 VStack {
                     Text("dawda")
+                    Button("Sign Out") {
+                        Task { try? await clerk.signOut() }
+                    }
                 }
             }
+        } else {
+            VStack {
+                Text("notLoggedIn")
+                NavigationLink("logIn") {
+                    LoginView()
+                }
+            }.padding()
         }
     }
 }
