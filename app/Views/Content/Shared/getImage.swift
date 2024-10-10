@@ -64,43 +64,6 @@ extension UIView {
     }
 }
 
-struct AsyncImage<Placeholder: View>: View {
-    @StateObject private var loader: ImageLoader
-    private var placeholder: Placeholder
-    public let image: (UIImage) -> Image
-    public let url: URL
-    
-    init(
-        url: URL,
-        @ViewBuilder placeholder: () -> Placeholder,
-        @ViewBuilder image: @escaping (UIImage) -> Image = Image.init(uiImage:)
-    ) {
-        self.url = url
-        self.placeholder = placeholder()
-        self.image = image
-        _loader = StateObject(wrappedValue: ImageLoader(url: url, cache: Environment(\.imageCache).wrappedValue))
-    }
-    
-    var body: some View {
-        content
-            .onAppear(perform: loader.load)
-    }
-    
-    public func getUIImage() -> UIImage {
-        return loader.image!
-    }
-    
-    private var content: some View {
-        Group {
-            if loader.image != nil {
-                image(loader.image!)
-            } else {
-                placeholder
-            }
-        }
-    }
-}
-
 protocol ImageCache {
     subscript(_ url: URL) -> UIImage? { get set }
 }
@@ -114,12 +77,47 @@ struct TemporaryImageCache: ImageCache {
     }
 }
 
+struct AsyncImage<Placeholder: View>: View {
+    @Binding var url: URL
+    @StateObject private var loader: ImageLoader
+    private var placeholder: Placeholder
+    private var image: (UIImage) -> Image
+    
+    init(
+        url: Binding<URL>,
+        @ViewBuilder placeholder: () -> Placeholder,
+        @ViewBuilder image: @escaping (UIImage) -> Image = Image.init(uiImage:)
+    ) {
+        self._url = url
+        self.placeholder = placeholder()
+        self.image = image
+        _loader = StateObject(wrappedValue: ImageLoader(url: url.wrappedValue, cache: Environment(\.imageCache).wrappedValue))
+    }
+    
+    var body: some View {
+        content
+            .onAppear(perform: loader.load)
+            .onChange(of: url) { newUrl in
+                loader.load(with: newUrl) // Reload the image when the URL changes
+            }
+    }
+    
+    private var content: some View {
+        Group {
+            if let loadedImage = loader.image {
+                image(loadedImage)
+            } else {
+                placeholder
+            }
+        }
+    }
+}
+
 class ImageLoader: ObservableObject {
     @Published var image: UIImage?
     
     private(set) var isLoading = false
-    
-    private let url: URL
+    private var url: URL
     private var cache: ImageCache?
     private var cancellable: AnyCancellable?
     
@@ -135,8 +133,15 @@ class ImageLoader: ObservableObject {
     }
     
     func load() {
+        load(with: url)
+    }
+    
+    func load(with newUrl: URL) {
         guard !isLoading else { return }
-
+        
+        // Update the URL
+        self.url = newUrl
+        
         if let image = cache?[url] {
             self.image = image
             return

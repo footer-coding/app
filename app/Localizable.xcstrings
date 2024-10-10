@@ -4,7 +4,7 @@
     "" : {
 
     },
-    " Edit" : {
+    "Account" : {
 
     },
     "accountRegistered" : {
@@ -20,9 +20,6 @@
 
     },
     "Cancel" : {
-
-    },
-    "Change avatar" : {
 
     },
     "Clerk iOS" : {
@@ -63,10 +60,10 @@
     "Do you want to email us?" : {
 
     },
-    "Don't have an account? Sign Up" : {
+    "Do you want to sign out?" : {
 
     },
-    "Done" : {
+    "Don't have an account? Sign Up" : {
 
     },
     "Edit" : {
@@ -182,10 +179,10 @@
         }
       }
     },
-    "Sign Out" : {
+    "Sign out" : {
 
     },
-    "Sign Out " : {
+    "Sign Out" : {
 
     },
     "ToasterCoder44" : {

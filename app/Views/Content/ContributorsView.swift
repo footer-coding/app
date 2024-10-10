@@ -13,10 +13,16 @@ struct ContributorsView: View {
         UITableView.appearance().backgroundColor = .clear
     }
     
+    @State private var pengwiusURL: URL = URL(string: "https://avatars.githubusercontent.com/u/55411338?v=4")!
+    @State private var Sajms0nURL: URL = URL(string: "https://avatars.githubusercontent.com/u/120739534?v=4")!
+    @State private var kube3qqURL: URL = URL(string: "https://avatars.githubusercontent.com/u/183517417?v=4")!
+    @State private var toasterURL: URL = URL(string: "https://avatars.githubusercontent.com/u/105929223?v=4")!
+    
+    
     var body: some View {
         Form {
             HStack {
-                AsyncImage(url: URL(string: "https://avatars.githubusercontent.com/u/55411338?s=460&v=4")!,
+                AsyncImage(url: $pengwiusURL,
                                placeholder: { Image(systemName: "circle.dashed") },
                                image: { Image(uiImage: $0).resizable() })
                     .frame(width: 38, height: 38)
@@ -26,7 +32,7 @@ struct ContributorsView: View {
             }
             
             HStack {
-                AsyncImage(url: URL(string: "https://avatars.githubusercontent.com/u/120739534?v=4")!,
+                AsyncImage(url: $Sajms0nURL,
                                placeholder: { Image(systemName: "circle.dashed") },
                                image: { Image(uiImage: $0).resizable() })
                     .frame(width: 38, height: 38)
@@ -36,7 +42,7 @@ struct ContributorsView: View {
             }
             
             HStack {
-                AsyncImage(url: URL(string: "https://avatars.githubusercontent.com/u/183517417?v=4")!,
+                AsyncImage(url: $kube3qqURL,
                                placeholder: { Image(systemName: "circle.dashed") },
                                image: { Image(uiImage: $0).resizable() })
                     .frame(width: 38, height: 38)
@@ -46,7 +52,7 @@ struct ContributorsView: View {
             }
             
             HStack {
-                AsyncImage(url: URL(string: "https://avatars.githubusercontent.com/u/105929223?v=4")!,
+                AsyncImage(url: $toasterURL,
                                placeholder: { Image(systemName: "circle.dashed") },
                                image: { Image(uiImage: $0).resizable() })
                     .frame(width: 38, height: 38)
