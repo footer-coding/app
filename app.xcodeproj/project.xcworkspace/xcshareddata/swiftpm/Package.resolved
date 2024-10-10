@@ -1,5 +1,5 @@
 {
-  "originHash" : "e6155bcb55384e0fcde0a157fe2ab6f9ec771195d96ecdac0026f000177a4685",
+  "originHash" : "88084d67949d870356fc6376b59147557355fc6a3711017debdba55836b368cf",
   "pins" : [
     {
       "identity" : "clerk-ios",
@@ -53,6 +53,15 @@
       "state" : {
         "revision" : "b694f155907b189bc82e93586695a26f558c742f",
         "version" : "1.2.0"
+      }
+    },
+    {
+      "identity" : "stripe-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/stripe/stripe-ios",
+      "state" : {
+        "revision" : "1bfb31801a48c92d912bfa5f12b6cc3a01e88de0",
+        "version" : "23.31.1"
       }
     },
     {
