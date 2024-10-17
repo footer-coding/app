@@ -22,13 +22,17 @@ struct DashboardView: View {
     
     var body: some View {
         if let user = clerk.user {
-            ScrollView {
+            HStack {
+                Spacer()
                 VStack {
+                    Spacer()
                     Text("dawda")
                     Button("Sign Out") {
                         Task { try? await clerk.signOut() }
                     }
+                    Spacer()
                 }
+                Spacer()
             }
             .background(Color("BackgroundColor"))
             .toolbar {
