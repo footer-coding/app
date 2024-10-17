@@ -4,7 +4,13 @@
     "" : {
 
     },
+    "$213769.69" : {
+
+    },
     "Account" : {
+
+    },
+    "Account balance" : {
 
     },
     "accountRegistered" : {
@@ -41,6 +47,9 @@
         }
       }
     },
+    "cos tu bedzie" : {
+
+    },
     "dashboardButton" : {
       "localizations" : {
         "en" : {
@@ -52,6 +61,9 @@
       }
     },
     "dawda" : {
+
+    },
+    "Deposit" : {
 
     },
     "Devices" : {
@@ -166,7 +178,16 @@
     "Phone numer" : {
 
     },
+    "PLN 213769.69" : {
+
+    },
+    "Polish PLN" : {
+
+    },
     "Sajms0n" : {
+
+    },
+    "See more" : {
 
     },
     "settingsButton" : {
@@ -191,7 +212,16 @@
     "ToasterCoder44" : {
 
     },
+    "Transactions" : {
+
+    },
+    "US Dollar" : {
+
+    },
     "Username" : {
+
+    },
+    "Withdrawal" : {
 
     },
     "Your email address" : {

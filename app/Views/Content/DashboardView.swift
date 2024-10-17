@@ -15,14 +15,14 @@ struct DashboardView: View {
     
     public let cornerRadius: CGFloat = 12
     public let cellBackground: Color = Color.gray.opacity(0.2)
+
+    init() {
+        UITableView.appearance().backgroundColor = .clear
+    }
     
     var body: some View {
         if let user = clerk.user {
             ScrollView {
-                PullToRefresh(coordinateSpaceName: "pullToRefresh") {
-                    print("Refreshing..")
-                }
-                
                 VStack {
                     Text("dawda")
                     Button("Sign Out") {
@@ -30,10 +30,14 @@ struct DashboardView: View {
                     }
                 }
             }
+            .background(Color("BackgroundColor"))
             .toolbar {
                 
             }
-            .toolbarVisibility(.hidden)
+            .refreshable {
+                
+            }
+//            .toolbarVisibility(.hidden)
         } else {
             VStack {
                 Text("notLoggedIn")

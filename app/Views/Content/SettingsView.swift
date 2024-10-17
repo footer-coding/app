@@ -211,7 +211,7 @@ struct SettingsView: View {
                     Button("Sign Out") {
                         signOutAlert.toggle()
                     }.padding(.trailing, 20)
-                }
+                }.padding(.top, 6)
                 
                 Form {
                     Section(header: formHeader
@@ -222,7 +222,7 @@ struct SettingsView: View {
                                     .accessibility(label: Text("Devices"))
                             }
                             
-                            NavigationLink(destination: PrivacyView()) {
+                            NavigationLink(destination: PaymentsView()) {
                                 Label("Payments", systemImage: "creditcard.fill")
                                     .accessibility(label: Text("Payments"))
                             }
@@ -308,7 +308,7 @@ struct SettingsView: View {
                 })
                 Button("Cancel", role: .cancel, action: {})
             })
-            .toolbarVisibility(.visible)
+//            .toolbarVisibility(.visible)
         } else {
             VStack {
                 Text("notLoggedIn")
