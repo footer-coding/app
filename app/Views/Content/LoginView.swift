@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ClerkSDK
+import AppNotifications
 
 struct LoginView: View {
     @State private var email = ""
@@ -49,24 +50,24 @@ struct LoginView: View {
             return cellBackground
         }
     }
-  
+    
     var body: some View {
         VStack {
             Spacer()
-                Image("etna")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height: 92)
-                    .cornerRadius(20)
-                    .padding(.bottom)
-              
-                Text("loginTitle")
-                    .font(.largeTitle)
-                    .fontWeight(.semibold)
-          
+            Image("etna")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 92)
+                .cornerRadius(20)
+                .padding(.bottom)
+            
+            Text("Log in")
+                .font(.largeTitle)
+                .fontWeight(.semibold)
+            
             Spacer()
-          
-            TextField("email", text: $email)
+            
+            TextField("Email or username", text: $email)
                 .autocapitalization(.none)
                 .font(Font.body.weight(Font.Weight.medium))
                 .multilineTextAlignment(.center)
@@ -76,9 +77,9 @@ struct LoginView: View {
                 .overlay(
                     RoundedRectangle(cornerRadius: cornerRadius)
                         .stroke(setColor(input: "username"), lineWidth: 2)
-                    )
-          
-            TextField("password", text: $password)
+                )
+            
+            TextField("Password", text: $password)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
                 .font(Font.body.weight(Font.Weight.medium))
@@ -89,40 +90,49 @@ struct LoginView: View {
                 .overlay(
                     RoundedRectangle(cornerRadius: cornerRadius)
                         .stroke(setColor(input: "password"), lineWidth: 2)
-                    )
+                )
             
             Link("Don't have an account? Sign Up", destination: URL(string: "https://fancy-manatee-69.accounts.dev/sign-up")!)
-          
+            
             Spacer()
             Spacer()
-          
-            Button(buttonValue) {
-                Task { await submit(email: email, password: password) }
+            
+            Button("Log in") {
+                Task {
+                    do {
+                        try await SignIn.create(
+                            strategy: .identifier(email, password: password)
+                        )
+                    } catch {
+                        AppNotifications.shared.notification = .init(error: "Wrong creditials")
+                    }
+                }
             }.font(.headline)
-            .multilineTextAlignment(.center)
-            .padding(.horizontal)
-            .frame(height: cellHeight)
-            .frame(maxWidth: .infinity)
-            .background(Color.accentColor.opacity(0.1))
-            .cornerRadius(cornerRadius)
-      }.padding()
-      .alert(isPresented: $showingAlert) {
-          Alert(title: Text("accountRegistered"), message: Text("accountRegisteredContent"), dismissButton: .default(Text("OK")))}
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+                .frame(height: cellHeight)
+                .frame(maxWidth: .infinity)
+                .background(Color.accentColor.opacity(0.2))
+                .cornerRadius(cornerRadius)
+        }.padding()
+            .alert(isPresented: $showingAlert) {
+                Alert(title: Text("accountRegistered"), message: Text("accountRegisteredContent"), dismissButton: .default(Text("OK")))}
         Spacer()
     }
 }
 
 extension LoginView {
     
-  func submit(email: String, password: String) async {
-    do {
-      try await SignIn.create(
-        strategy: .identifier(email, password: password)
-      )
-    } catch {
-      dump(error)
+    func submit(email: String, password: String) async {
+        do {
+            try await SignIn.create(
+                strategy: .identifier(email, password: password)
+            )
+        } catch {
+            dump(error)
+            
+        }
     }
-  }
 }
 
 struct LoginView_Previews: PreviewProvider {

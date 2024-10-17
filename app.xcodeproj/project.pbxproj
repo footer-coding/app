@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C247CFE2CC15C7000DA8089 /* AppNotifications in Frameworks */ = {isa = PBXBuildFile; productRef = 5C247CFD2CC15C7000DA8089 /* AppNotifications */; };
 		5C25EFD02CB826F900A99D32 /* Stripe in Frameworks */ = {isa = PBXBuildFile; productRef = 5C25EFCF2CB826F900A99D32 /* Stripe */; };
 		5C25EFD22CB826F900A99D32 /* StripeApplePay in Frameworks */ = {isa = PBXBuildFile; productRef = 5C25EFD12CB826F900A99D32 /* StripeApplePay */; };
 		5C25EFD42CB826F900A99D32 /* StripeCardScan in Frameworks */ = {isa = PBXBuildFile; productRef = 5C25EFD32CB826F900A99D32 /* StripeCardScan */; };
@@ -47,6 +48,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				Modules/AppNotifications,
 				Modules/sdk,
 			);
 			target = 5C2A53352CAFE4A700AA62BA /* app */;
@@ -76,6 +78,7 @@
 				5C25EFDA2CB826F900A99D32 /* StripePaymentSheet in Frameworks */,
 				5CBE75432CB5716800516616 /* ClerkSDK in Frameworks */,
 				5C25EFDE2CB826F900A99D32 /* StripePaymentsUI in Frameworks */,
+				5C247CFE2CC15C7000DA8089 /* AppNotifications in Frameworks */,
 				5C25EFDC2CB826F900A99D32 /* StripePayments in Frameworks */,
 				5C25EFD02CB826F900A99D32 /* Stripe in Frameworks */,
 				5C8C49A92CC1385A0053AD81 /* sdk in Frameworks */,
@@ -155,6 +158,7 @@
 				5C25EFDB2CB826F900A99D32 /* StripePayments */,
 				5C25EFDD2CB826F900A99D32 /* StripePaymentsUI */,
 				5C8C49A82CC1385A0053AD81 /* sdk */,
+				5C247CFD2CC15C7000DA8089 /* AppNotifications */,
 			);
 			productName = app;
 			productReference = 5C2A53362CAFE4A700AA62BA /* app.app */;
@@ -626,6 +630,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5C247CFD2CC15C7000DA8089 /* AppNotifications */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppNotifications;
+		};
 		5C25EFCF2CB826F900A99D32 /* Stripe */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5C25EFCE2CB826F900A99D32 /* XCRemoteSwiftPackageReference "stripe-ios" */;

@@ -27,9 +27,6 @@ struct DashboardView: View {
                 VStack {
                     Spacer()
                     Text("dawda")
-                    Button("Sign Out") {
-                        Task { try? await clerk.signOut() }
-                    }
                     Spacer()
                 }
                 Spacer()

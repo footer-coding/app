@@ -7,12 +7,14 @@
 
 import SwiftUI
 import ClerkSDK
+import AppNotifications
 
 @main
 struct appApp: App {
     @AppStorage("needsAppOnboarding") private var needsAppOnboarding: Bool = true
     
     @ObservedObject private var clerk = Clerk.shared
+    @StateObject private var appNotifications: AppNotifications = AppNotifications.shared
     
     var body: some Scene {
         WindowGroup {
@@ -26,6 +28,8 @@ struct appApp: App {
                         NavbarView()
                             .onAppear {
                             }
+                            .environmentObject(appNotifications)
+                            .notificationOverlay(appNotifications)
 
                     }
                 }.task {
