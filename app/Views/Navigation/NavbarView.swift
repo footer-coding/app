@@ -27,13 +27,3 @@ struct NavbarView: View {
         }
     }
 }
-
-
-struct NavbarView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            NavbarView()
-        }
-        .preferredColorScheme(.dark)
-    }
-}

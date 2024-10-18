@@ -775,7 +775,3 @@ struct LicenceView: View {
         .background(Color("BackgroundColor"))
     }
 }
-
-#Preview {
-    LicenceView()
-}

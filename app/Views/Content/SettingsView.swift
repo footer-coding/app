@@ -61,8 +61,6 @@ struct SettingsView: View {
                         AsyncImage(url: $image,
                                    placeholder: { Image(systemName: "circle.dashed") },
                                    image: { Image(uiImage: $0).resizable() })
-                        //                        .resizable()
-                        //                        .aspectRatio(contentMode: .fill)
                         .frame(width: 130, height: 130)
                         .clipShape(Circle())
                     } else {
@@ -72,27 +70,11 @@ struct SettingsView: View {
                             .frame(width: 130, height: 130)
                             .clipShape(Circle())
                     }
-//                    
-//                    
-//                    Button(action: {
-//                        isShowPicker.toggle()
-//                    }) {
-//                        Text("Change avatar")
-//                    }
                 }
             }
             Spacer()
         }
     }
-    
-//    private func updateProfileImage() {
-//        if (self.imageUpdate != nil) {
-//            Task {
-//                let imagePngData: Data = self.imageUpdate?.pngData() ?? Data()
-//                try await clerk.user?.setProfileImage(imagePngData)
-//            }
-//        }
-//    }
     
     private func hideEditSheet() {
         showEditSheet.toggle()
@@ -126,7 +108,6 @@ struct SettingsView: View {
         .onAppear {
             username = clerk.user?.username ?? "No username"
             email = clerk.user?.emailAddresses[0].emailAddress ?? "No email address"
-            //            image = UIImage(data: account.avatar!)!
             phoneNumber = clerk.user?.phoneNumbers[0].phoneNumber ?? "No phone number"
             image = URL(string: clerk.user?.imageUrl ?? "")!
         }
@@ -163,8 +144,6 @@ struct SettingsView: View {
             AsyncImage(url: $image,
                placeholder: { Image(systemName: "circle.dashed") },
                image: { Image(uiImage: $0).resizable() })
-//                .resizable()
-//                .aspectRatio(contentMode: .fill)
                 .frame(width: 130, height: 130)
                 .clipShape(Circle())
             
@@ -256,37 +235,18 @@ struct SettingsView: View {
                 .refreshable {
                     username = clerk.user?.username ?? "No username"
                     email = clerk.user?.emailAddresses[0].emailAddress ?? "No email address"
-                    //            image = UIImage(data: account.avatar!)!
                     phoneNumber = clerk.user?.phoneNumbers[0].phoneNumber ?? "No phone number"
                     image = URL(string: clerk.user?.imageUrl ?? "")!
                 }
             }
-            //.navigationBarTitle("Settings", displayMode: .inline)
-            //        .navigationBarTitle(account.username ?? "<username can't be loaded>", displayMode: .inline)
             .background(Color("BackgroundColor"))
             .onAppear {
                 username = clerk.user?.username ?? "No username"
                 email = clerk.user?.emailAddresses[0].emailAddress ?? "No email address"
-                //            image = UIImage(data: account.avatar!)!
                 phoneNumber = clerk.user?.phoneNumbers[0].phoneNumber ?? "No phone number"
                 image = URL(string: clerk.user?.imageUrl ?? "")!
             }
             .background(Color("BackgroundColor"))
-//            .toolbar {
-//                ToolbarItem(placement: .navigationBarTrailing) {
-//                    Button("Sign Out ") {
-//                        Task { try? await clerk.signOut() }
-//                    }
-//                }
-//                
-//                ToolbarItem(placement: .navigationBarLeading) {
-//                    Button(action: {
-//                        showEditSheet.toggle()
-//                    }) {
-//                        Text(" Edit")
-//                    }
-//                }
-//            }
             .sheet(isPresented: $showEditSheet) {
                 NavigationView {
                     editAccount
@@ -308,7 +268,6 @@ struct SettingsView: View {
                 })
                 Button("Cancel", role: .cancel, action: {})
             })
-//            .toolbarVisibility(.visible)
         } else {
             VStack {
                 Text("notLoggedIn")
@@ -317,14 +276,5 @@ struct SettingsView: View {
                 }
             }.padding()
         }
-    }
-}
-
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            SettingsView()
-        }
-        .preferredColorScheme(.dark)
     }
 }

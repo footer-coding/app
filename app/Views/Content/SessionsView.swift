@@ -13,10 +13,6 @@ struct SessionsView: View {
     
     @ObservedObject private var clerk = Clerk.shared
     
-//    init() {
-//        UITableView.appearance().backgroundColor = .clear
-//    }
-
     private func loadSessions() {
         Task {
             if let userSessions = try? await Clerk.shared.user?.getSessions() {
@@ -57,8 +53,4 @@ struct SessionsView: View {
         }
         .navigationBarTitle("Devices", displayMode: .inline)
     }
-}
-
-#Preview {
-    SessionsView()
 }

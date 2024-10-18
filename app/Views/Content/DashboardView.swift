@@ -38,7 +38,6 @@ struct DashboardView: View {
             .refreshable {
                 
             }
-//            .toolbarVisibility(.hidden)
         } else {
             VStack {
                 Text("notLoggedIn")
@@ -47,14 +46,5 @@ struct DashboardView: View {
                 }
             }.padding()
         }
-    }
-}
-
-struct DashboardView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            DashboardView()
-        }
-        .preferredColorScheme(.dark)
     }
 }

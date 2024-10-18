@@ -21,9 +21,6 @@ struct PaymentsView: View {
                 VStack {
                     VStack {
                         HStack {
-//                            Image(systemName: "creditcard")
-//                                .padding(.horizontal)
-//                                .font(.title)
                             VStack {
                                 HStack {
                                     Text("Account balance")
@@ -153,7 +150,3 @@ struct PaymentsView: View {
         }.background(Color("BackgroundColor"))
     }
 }
-
-//#Preview {
-//    PaymentsView()
-//}

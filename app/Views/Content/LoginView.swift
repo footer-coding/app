@@ -120,26 +120,3 @@ struct LoginView: View {
         Spacer()
     }
 }
-
-extension LoginView {
-    
-    func submit(email: String, password: String) async {
-        do {
-            try await SignIn.create(
-                strategy: .identifier(email, password: password)
-            )
-        } catch {
-            dump(error)
-            
-        }
-    }
-}
-
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            LoginView()
-        }
-        .preferredColorScheme(.dark)
-    }
-}
