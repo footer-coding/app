@@ -111,9 +111,6 @@ struct SettingsView: View {
             phoneNumber = clerk.user?.phoneNumbers[0].phoneNumber ?? "No phone number"
             image = URL(string: clerk.user?.imageUrl ?? "")!
         }
-        .sheet(isPresented: $isShowPicker) {
-            ImagePicker(image: self.$imageUpdate, isImagePicked: self.$isImagePicked)
-        }
         .navigationTitle("Edit account")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
