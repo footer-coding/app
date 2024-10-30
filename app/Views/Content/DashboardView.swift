@@ -12,9 +12,6 @@ import sdk
 struct DashboardView: View {
     @State private var showModal = false
     
-    @State private var isLogged = false
-    @State private var usernameFromSdk: String? = ""
-    
     @ObservedObject private var clerk = Clerk.shared
     
     public let cornerRadius: CGFloat = 12
@@ -31,8 +28,6 @@ struct DashboardView: View {
                 HStack {
                     Spacer()
                     Text("dawda")
-                    Text("\(isLogged)")
-                    Text("\(usernameFromSdk ?? "empty")")
                     Spacer()
                 }
                 Spacer()
@@ -42,8 +37,6 @@ struct DashboardView: View {
                 
             }
             .refreshable {
-                isLogged = SdkClient.shared.isLogged()
-                usernameFromSdk = SdkClient.shared.getUsername()
             }
         } else {
             VStack {

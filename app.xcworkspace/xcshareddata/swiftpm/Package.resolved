@@ -56,6 +56,15 @@
         }
       },
       {
+        "package": "Stripe",
+        "repositoryURL": "https://github.com/stripe/stripe-ios",
+        "state": {
+          "branch": null,
+          "revision": "d20549e5a83b69d47f041ce2ba9af789e3e1a626",
+          "version": "23.15.0"
+        }
+      },
+      {
         "package": "swift-algorithms",
         "repositoryURL": "https://github.com/apple/swift-algorithms",
         "state": {

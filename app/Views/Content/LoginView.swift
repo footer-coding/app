@@ -26,6 +26,8 @@ struct LoginView: View {
     
     public let nullColor: Color = Color.accentColor.opacity(0.4)
     
+    @Environment(\.presentationMode) var presentationMode: Binding
+    
     private func setColor(input: String) -> Color {
         if(clicked == true){
             switch(input) {
@@ -79,7 +81,7 @@ struct LoginView: View {
                         .stroke(setColor(input: "username"), lineWidth: 2)
                 )
             
-            TextField("Password", text: $password)
+            SecureField("Password", text: $password)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
                 .font(Font.body.weight(Font.Weight.medium))
@@ -103,6 +105,9 @@ struct LoginView: View {
                         try await SignIn.create(
                             strategy: .identifier(email, password: password)
                         )
+                        
+                        AppNotifications.shared.notification = .init(succcess: "Successfuly logged in!")
+                        self.presentationMode.wrappedValue.dismiss()
                     } catch {
                         AppNotifications.shared.notification = .init(error: "Wrong creditials")
                     }
