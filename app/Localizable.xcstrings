@@ -28,6 +28,9 @@
     "AppNotifications" : {
 
     },
+    "Buy" : {
+
+    },
     "Cancel" : {
 
     },
@@ -108,6 +111,9 @@
     "Loading..." : {
 
     },
+    "Loading…" : {
+
+    },
     "Log in" : {
 
     },
@@ -169,6 +175,15 @@
     "Password" : {
 
     },
+    "Payment canceled." : {
+
+    },
+    "Payment complete" : {
+
+    },
+    "Payment failed: %@" : {
+
+    },
     "Payments" : {
 
     },
@@ -225,6 +240,12 @@
 
     },
     "Withdrawal" : {
+
+    },
+    "Wpisz cos" : {
+
+    },
+    "Wyslij" : {
 
     },
     "Your email address" : {

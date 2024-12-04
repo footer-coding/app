@@ -125,8 +125,8 @@ struct PaymentsView: View {
             
             VStack {
                 HStack {
-                    Button("Deposit") {
-                        print("deposit")
+                    NavigationLink(destination: CheckoutView()) {
+                        Text("Deposit")
                     }.font(.headline)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal)

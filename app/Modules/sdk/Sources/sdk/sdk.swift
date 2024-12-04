@@ -14,5 +14,5 @@ public final class SdkClient: ObservableObject {
     
     public init() {}
     
-    public let API_URL = "127.0.0.1:8080"
+    public let API_URL = "http://localhost:8080"
 }
