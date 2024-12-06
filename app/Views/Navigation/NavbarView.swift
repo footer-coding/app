@@ -17,12 +17,17 @@ struct NavbarView: View {
                         Label("dashboardButton", systemImage: "rectangle.on.rectangle")
                             .accessibility(label: Text("dashboardButton"))
                     }
-                
+                ManageView()
+                    .tabItem {
+                        Label("manageButton", systemImage: "person")
+                            .accessibility(label: Text("manageButton"))
+                    }
                 SettingsView()
                     .tabItem {
                         Label("settingsButton", systemImage: "gear")
                             .accessibility(label: Text("settingsButton"))
                     }
+                
             }
         }
     }

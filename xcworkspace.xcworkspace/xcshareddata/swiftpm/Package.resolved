@@ -1,0 +1,106 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Clerk",
+        "repositoryURL": "https://github.com/clerk/clerk-ios",
+        "state": {
+          "branch": null,
+          "revision": "4117a258588d2d1c3613ce81711d6a2ae72db4c9",
+          "version": "0.39.3"
+        }
+      },
+      {
+        "package": "Factory",
+        "repositoryURL": "https://github.com/hmlongco/Factory",
+        "state": {
+          "branch": null,
+          "revision": "f350e0d71ba241b392f70519a67e769d5e3858d4",
+          "version": "2.4.1"
+        }
+      },
+      {
+        "package": "Get",
+        "repositoryURL": "https://github.com/kean/Get",
+        "state": {
+          "branch": null,
+          "revision": "31249885da1052872e0ac91a2943f62567c0d96d",
+          "version": "2.2.1"
+        }
+      },
+      {
+        "package": "Nuke",
+        "repositoryURL": "https://github.com/kean/Nuke",
+        "state": {
+          "branch": null,
+          "revision": "0ead44350d2737db384908569c012fe67c421e4d",
+          "version": "12.8.0"
+        }
+      },
+      {
+        "package": "PhoneNumberKit",
+        "repositoryURL": "https://github.com/marmelroy/PhoneNumberKit",
+        "state": {
+          "branch": null,
+          "revision": "c107075aa8d394be7aced273a46e944afe8b321b",
+          "version": "3.8.0"
+        }
+      },
+      {
+        "package": "SimpleKeychain",
+        "repositoryURL": "https://github.com/auth0/SimpleKeychain",
+        "state": {
+          "branch": null,
+          "revision": "b694f155907b189bc82e93586695a26f558c742f",
+          "version": "1.2.0"
+        }
+      },
+      {
+        "package": "Stripe",
+        "repositoryURL": "https://github.com/stripe/stripe-ios-spm",
+        "state": {
+          "branch": null,
+          "revision": "c851ddc4620c1c7fa366c0eac0ab9bc4bd144736",
+          "version": "24.1.1"
+        }
+      },
+      {
+        "package": "swift-algorithms",
+        "repositoryURL": "https://github.com/apple/swift-algorithms",
+        "state": {
+          "branch": null,
+          "revision": "f6919dfc309e7f1b56224378b11e28bab5bccc42",
+          "version": "1.2.0"
+        }
+      },
+      {
+        "package": "swift-numerics",
+        "repositoryURL": "https://github.com/apple/swift-numerics.git",
+        "state": {
+          "branch": null,
+          "revision": "0a5bc04095a675662cf24757cc0640aa2204253b",
+          "version": "1.0.2"
+        }
+      },
+      {
+        "package": "SwiftUIEKtensions",
+        "repositoryURL": "https://github.com/EnesKaraosman/SwiftUIEKtensions",
+        "state": {
+          "branch": null,
+          "revision": "bf96c0d841d2bc81dac0d7e28aa9ab71cd7d6c2a",
+          "version": "0.4.0"
+        }
+      },
+      {
+        "package": "SwiftyJSON",
+        "repositoryURL": "https://github.com/SwiftyJSON/SwiftyJSON.git",
+        "state": {
+          "branch": null,
+          "revision": "af76cf3ef710b6ca5f8c05f3a31307d44a3c5828",
+          "version": "5.0.2"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -4,6 +4,9 @@
     "" : {
 
     },
+    "%lld" : {
+
+    },
     "$213769.69" : {
 
     },
@@ -19,7 +22,25 @@
     "accountRegisteredContent" : {
 
     },
+    "Add Checkpoints" : {
+
+    },
+    "Add Planes" : {
+
+    },
+    "Add Soldiers" : {
+
+    },
+    "Add Tanks" : {
+
+    },
+    "Amount" : {
+
+    },
     "Amount in PLN" : {
+
+    },
+    "Amount:" : {
 
     },
     "App developers" : {
@@ -87,6 +108,9 @@
     "Don't have an account? Sign Up" : {
 
     },
+    "Draw Route" : {
+
+    },
     "Edit" : {
 
     },
@@ -102,7 +126,16 @@
     "Footer" : {
 
     },
+    "Go to Map" : {
+
+    },
+    "Go to Payments" : {
+
+    },
     "Hello, World!" : {
+
+    },
+    "Hide Route" : {
 
     },
     "kube3qq" : {
@@ -135,6 +168,12 @@
       "comment" : "loginButton"
     },
     "Made with ❤️ and ☕️" : {
+
+    },
+    "Manage" : {
+
+    },
+    "manageButton" : {
 
     },
     "notLoggedIn" : {
@@ -208,6 +247,9 @@
     "Proceed to Checkout" : {
 
     },
+    "Reset" : {
+
+    },
     "Sajms0n" : {
 
     },
@@ -223,6 +265,15 @@
           }
         }
       }
+    },
+    "Show Control Zones" : {
+
+    },
+    "Show Friendly Units" : {
+
+    },
+    "Show Hostile Units" : {
+
     },
     "Sign out" : {
 
@@ -261,6 +312,12 @@
 
     },
     "Your phone number" : {
+
+    },
+    "Zoom In" : {
+
+    },
+    "Zoom Out" : {
 
     }
   },
