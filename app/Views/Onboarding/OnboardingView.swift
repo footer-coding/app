@@ -46,12 +46,12 @@ struct OnboardingView: View {
     var body: some View {
             VStack() {
                 Spacer()
-                Image("footer")
+                Image("NoBackgroundIcon")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(height: 92)
+                    .frame(height: 162)
                     .cornerRadius(20)
-                    .padding(.bottom)
+                    .padding(.bottom, -40)
                 
                 Text("onboardingTitle")
                     .font(.title)

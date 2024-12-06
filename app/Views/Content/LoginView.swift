@@ -56,12 +56,12 @@ struct LoginView: View {
     var body: some View {
         VStack {
             Spacer()
-            Image("etna")
+            Image("NoBackgroundIcon")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(height: 92)
+                .frame(height: 162)
                 .cornerRadius(20)
-                .padding(.bottom)
+                .padding(.bottom, -40)
             
             Text("Log in")
                 .font(.largeTitle)
