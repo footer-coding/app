@@ -30,7 +30,6 @@ struct appApp: App {
                             }
                             .environmentObject(appNotifications)
                             .notificationOverlay(appNotifications)
-
                     }
                 }.task {
                     clerk.configure(publishableKey: "pk_test_ZmFuY3ktbWFuYXRlZS02OS5jbGVyay5hY2NvdW50cy5kZXYk")

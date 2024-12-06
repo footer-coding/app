@@ -19,6 +19,9 @@
     "accountRegisteredContent" : {
 
     },
+    "Amount in PLN" : {
+
+    },
     "App developers" : {
 
     },
@@ -26,9 +29,6 @@
 
     },
     "AppNotifications" : {
-
-    },
-    "Buy" : {
 
     },
     "Cancel" : {
@@ -70,6 +70,9 @@
 
     },
     "Deposit" : {
+
+    },
+    "Deposit Amount" : {
 
     },
     "Devices" : {
@@ -175,13 +178,10 @@
     "Password" : {
 
     },
-    "Payment canceled." : {
+    "Pay" : {
 
     },
-    "Payment complete" : {
-
-    },
-    "Payment failed: %@" : {
+    "Payment Summary" : {
 
     },
     "Payments" : {
@@ -196,10 +196,16 @@
     "Phone numer" : {
 
     },
+    "PLN" : {
+
+    },
     "PLN 213769.69" : {
 
     },
     "Polish PLN" : {
+
+    },
+    "Proceed to Checkout" : {
 
     },
     "Sajms0n" : {
@@ -228,6 +234,9 @@
 
     },
     "ToasterCoder44" : {
+
+    },
+    "Total Amount: PLN%@" : {
 
     },
     "Transactions" : {

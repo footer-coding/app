@@ -75,8 +75,8 @@ extension AppNotifications {
 			self.init(autodismisses: true, dismissable: true, style: .error, icon: "exclamationmark.triangle.fill", title: "Error!", subtitle: error)
 		}
         
-        public init(succcess: String) {
-            self.init(autodismisses: true, dismissable: true, style: .success, icon: "checkmark.circle", title: "Success!", subtitle: succcess)
+        public init(success: String) {
+            self.init(autodismisses: true, dismissable: true, style: .success, icon: "checkmark.circle", title: "Success!", subtitle: success)
         }
 		
 		public var id: UUID = UUID()

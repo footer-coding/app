@@ -106,7 +106,7 @@ struct LoginView: View {
                             strategy: .identifier(email, password: password)
                         )
                         
-                        AppNotifications.shared.notification = .init(succcess: "Successfuly logged in!")
+                        AppNotifications.shared.notification = .init(success: "Successfuly logged in!")
                         self.presentationMode.wrappedValue.dismiss()
                     } catch {
                         AppNotifications.shared.notification = .init(error: "Wrong creditials")
