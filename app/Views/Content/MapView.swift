@@ -75,7 +75,68 @@ struct MapView: View {
     
     var body: some View {
         VStack {
-            MapViewRepresentable(region: $region, checkpoints: $checkpoints, tanks: $tanks, soldiers: $soldiers, planes: $planes)
+            ZStack {
+                Map(coordinateRegion: $region, annotationItems: mapItems) { item in
+                    MapAnnotation(coordinate: item.coordinate) {
+                        VStack {
+                            switch item {
+                            case .checkpoint:
+                                Circle()
+                                    .strokeBorder(Color.blue, lineWidth: 2)
+                                    .background(Circle().foregroundColor(Color.blue.opacity(0.3)))
+                                    .frame(width: 10, height: 10)
+                            case .tank(let tank):
+                                Image(systemName: "car.fill")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundColor(.green)
+                                Text("\(tank.amount)")
+                                    .font(.caption)
+                                    .foregroundColor(.black)
+                            case .soldier(let soldier):
+                                Image(systemName: "person.fill")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundColor(.brown)
+                                Text("\(soldier.amount)")
+                                    .font(.caption)
+                                    .foregroundColor(.black)
+                            case .plane(let plane):
+                                Image(systemName: "airplane")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundColor(.blue)
+                                Text("\(plane.amount)")
+                                    .font(.caption)
+                                    .foregroundColor(.black)
+                            }
+                        }
+                        .gesture(
+                            DragGesture()
+                                .onChanged { value in
+                                    let newCoordinate = convertToCoordinate(from: value.location, in: region)
+                                    switch item {
+                                    case .checkpoint(let checkpoint):
+                                        if let index = checkpoints.firstIndex(where: { $0.id == checkpoint.id }) {
+                                            checkpoints[index].coordinate = newCoordinate
+                                        }
+                                    case .tank(let tank):
+                                        if let index = tanks.firstIndex(where: { $0.id == tank.id }) {
+                                            tanks[index].coordinate = newCoordinate
+                                        }
+                                    case .soldier(let soldier):
+                                        if let index = soldiers.firstIndex(where: { $0.id == soldier.id }) {
+                                            soldiers[index].coordinate = newCoordinate
+                                        }
+                                    case .plane(let plane):
+                                        if let index = planes.firstIndex(where: { $0.id == plane.id }) {
+                                            planes[index].coordinate = newCoordinate
+                                        }
+                                    }
+                                }
+                        )
+                    }
+                }
                 .edgesIgnoringSafeArea(.all)
                 .onTapGesture {
                     let location = region.center
@@ -89,10 +150,11 @@ struct MapView: View {
                         checkpoints.append(Checkpoint(coordinate: location))
                     }
                 }
-            
-            if drawRoute && checkpoints.count > 1 {
-                RoutePath(checkpoints: checkpoints, region: region)
-                    .stroke(Color.red, lineWidth: 2)
+                
+                if drawRoute && checkpoints.count > 1 {
+                    RoutePath(checkpoints: checkpoints, region: region)
+                        .stroke(Color.red, lineWidth: 2)
+                }
             }
             
             VStack {
@@ -238,93 +300,10 @@ struct MapView: View {
         addingPlanes = false
         addingCheckpoints = false
     }
-}
-
-struct MapViewRepresentable: UIViewRepresentable {
-    @Binding var region: MKCoordinateRegion
-    @Binding var checkpoints: [Checkpoint]
-    @Binding var tanks: [Tank]
-    @Binding var soldiers: [Soldier]
-    @Binding var planes: [Plane]
     
-    func makeUIView(context: Context) -> MKMapView {
-        let mapView = MKMapView()
-        mapView.delegate = context.coordinator
-        return mapView
-    }
-    
-    func updateUIView(_ mapView: MKMapView, context: Context) {
-        mapView.setRegion(region, animated: true)
-        mapView.removeAnnotations(mapView.annotations)
-        
-        let annotations = checkpoints.map { checkpoint -> MKPointAnnotation in
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = checkpoint.coordinate
-            annotation.title = "Checkpoint"
-            return annotation
-        } + tanks.map { tank -> MKPointAnnotation in
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = tank.coordinate
-            annotation.title = "Tank (\(tank.amount))"
-            return annotation
-        } + soldiers.map { soldier -> MKPointAnnotation in
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = soldier.coordinate
-            annotation.title = "Soldier (\(soldier.amount))"
-            return annotation
-        } + planes.map { plane -> MKPointAnnotation in
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = plane.coordinate
-            annotation.title = "Plane (\(plane.amount))"
-            return annotation
-        }
-        
-        mapView.addAnnotations(annotations)
-    }
-    
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-    
-    class Coordinator: NSObject, MKMapViewDelegate {
-        var parent: MapViewRepresentable
-        
-        init(_ parent: MapViewRepresentable) {
-            self.parent = parent
-        }
-        
-        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-            let identifier = "MapItem"
-            var view: MKMarkerAnnotationView
-            if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView {
-                dequeuedView.annotation = annotation
-                view = dequeuedView
-            } else {
-                view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-                view.canShowCallout = true
-                view.isDraggable = true
-            }
-            return view
-        }
-        
-        func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationView.DragState, fromOldState oldState: MKAnnotationView.DragState) {
-            guard let annotation = view.annotation else { return }
-            switch newState {
-            case .ending, .canceling:
-                view.dragState = .none
-                if let index = parent.checkpoints.firstIndex(where: { $0.coordinate.latitude == annotation.coordinate.latitude && $0.coordinate.longitude == annotation.coordinate.longitude }) {
-                    parent.checkpoints[index].coordinate = annotation.coordinate
-                } else if let index = parent.tanks.firstIndex(where: { $0.coordinate.latitude == annotation.coordinate.latitude && $0.coordinate.longitude == annotation.coordinate.longitude }) {
-                    parent.tanks[index].coordinate = annotation.coordinate
-                } else if let index = parent.soldiers.firstIndex(where: { $0.coordinate.latitude == annotation.coordinate.latitude && $0.coordinate.longitude == annotation.coordinate.longitude }) {
-                    parent.soldiers[index].coordinate = annotation.coordinate
-                } else if let index = parent.planes.firstIndex(where: { $0.coordinate.latitude == annotation.coordinate.latitude && $0.coordinate.longitude == annotation.coordinate.longitude }) {
-                    parent.planes[index].coordinate = annotation.coordinate
-                }
-            default:
-                break
-            }
-        }
+    private func convertToCoordinate(from point: CGPoint, in region: MKCoordinateRegion) -> CLLocationCoordinate2D {
+        let mapPoint = MKMapPoint(x: Double(point.x), y: Double(point.y))
+        return mapPoint.coordinate
     }
 }
 

@@ -4,11 +4,10 @@
     "" : {
 
     },
-<<<<<<< HEAD
     "%lld" : {
-=======
+
+    },
     "+2137.69 PLN" : {
->>>>>>> 4af28104e2321373d61923ea267822e5f3bc4b9d
 
     },
     "$213769.69" : {
@@ -130,11 +129,10 @@
     "Don't have an account? Sign Up" : {
 
     },
-<<<<<<< HEAD
-    "Draw Route" : {
-=======
     "Done" : {
->>>>>>> 4af28104e2321373d61923ea267822e5f3bc4b9d
+
+    },
+    "Draw Route" : {
 
     },
     "Edit" : {
@@ -273,11 +271,10 @@
     "Proceed to Checkout" : {
 
     },
-<<<<<<< HEAD
-    "Reset" : {
-=======
     "Processing" : {
->>>>>>> 4af28104e2321373d61923ea267822e5f3bc4b9d
+
+    },
+    "Reset" : {
 
     },
     "Sajms0n" : {

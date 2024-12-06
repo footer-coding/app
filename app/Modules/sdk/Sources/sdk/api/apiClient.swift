@@ -84,9 +84,6 @@ extension SdkClient {
         }
     }
     
-    
-<<<<<<< HEAD
-=======
     @MainActor public func getBitcoinAddress(completion: @escaping (String?) -> Void) {
         let urlString: String = "\(SdkClient.shared.CRYPTO_API_URL)/generate_address"
         print(urlString)
@@ -140,5 +137,4 @@ extension SdkClient {
             }
         }
     }
->>>>>>> 4af28104e2321373d61923ea267822e5f3bc4b9d
 }
