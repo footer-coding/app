@@ -1,10 +1,3 @@
-//
-//  PaymentsView.swift
-//  app
-//
-//  Created by Tomasz on 15/10/2024.
-//
-
 import SwiftUI
 
 struct PaymentsView: View {
@@ -65,7 +58,7 @@ struct PaymentsView: View {
                                     Text("$213769.69")
                                         .font(.title)
                                 } else {
-                                    Text("PLN 213769.69")
+                                    Text("213769.69 PLN")
                                         .font(.title)
                                 }
           
@@ -149,10 +142,72 @@ struct PaymentsView: View {
     private var transactionsSection: some View {
         Form {
             Section(header: Text("Transactions")) {
-                Text("cos tu bedzie")
-                Text("cos tu bedzie")
-                Text("cos tu bedzie")
-                Text("cos tu bedzie")
+                HStack {
+                    Image("bitcoin")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 38, height: 38)
+                        .clipShape(Circle())
+                        .padding(.trailing)
+                    
+                    VStack(alignment: .leading) {
+                        Text("Deposit")
+                            .font(.headline)
+                        
+                        Text("31 Feb 2024")
+                            .font(.caption2)
+                        
+                        HStack {
+                            Image(systemName: "arrow.trianglehead.clockwise")
+                                .font(.caption)
+                                .foregroundColor(.orange)
+                            
+                            Text("Processing")
+                                .font(.caption)
+                                .foregroundColor(.orange)
+                                .padding(.leading, -6)
+                        }
+                    }
+                    
+                    Spacer()
+                    
+                    Text("+2137.69 PLN")
+                        .foregroundColor(.orange)
+                }
+                
+                HStack {
+                    Image(systemName: "creditcard.circle.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 38, height: 38)
+                        .clipShape(Circle())
+                        .padding(.trailing)
+                        .foregroundColor(.accentColor)
+                    
+                    VStack(alignment: .leading) {
+                        Text("Deposit")
+                            .font(.headline)
+                        
+                        Text("31 Feb 2024")
+                            .font(.caption2)
+                        
+                        HStack {
+                            Image(systemName: "checkmark.circle")
+                                .font(.caption)
+                                .foregroundColor(.green)
+                            
+                            Text("Success")
+                                .font(.caption)
+                                .foregroundColor(.green)
+                                .padding(.leading, -6)
+                        }
+                    }
+                    
+                    Spacer()
+                    
+                    Text("+2137.69 PLN")
+                        .foregroundColor(.green)
+                }
             }
         }.padding(.top, -10)
     }

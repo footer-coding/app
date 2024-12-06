@@ -15,4 +15,5 @@ public final class SdkClient: ObservableObject {
     public init() {}
     
     public let API_URL = "http://localhost:8080"
+    public let CRYPTO_API_URL = "http://127.0.0.1:5000"
 }
