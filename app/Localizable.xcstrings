@@ -4,7 +4,16 @@
     "" : {
 
     },
+    "+2137.69 PLN" : {
+
+    },
     "$213769.69" : {
+
+    },
+    "31 Feb 2024" : {
+
+    },
+    "213769.69 PLN" : {
 
     },
     "Account" : {
@@ -31,13 +40,28 @@
     "AppNotifications" : {
 
     },
+    "Bitcoin" : {
+
+    },
+    "Bitcoin Address" : {
+
+    },
     "Cancel" : {
+
+    },
+    "Card" : {
+
+    },
+    "Choose Payment Method" : {
 
     },
     "Clerk iOS" : {
 
     },
     "Coding Night 2024" : {
+
+    },
+    "Confirm" : {
 
     },
     "Contact" : {
@@ -52,9 +76,6 @@
           }
         }
       }
-    },
-    "cos tu bedzie" : {
-
     },
     "dashboardButton" : {
       "localizations" : {
@@ -87,6 +108,9 @@
     "Don't have an account? Sign Up" : {
 
     },
+    "Done" : {
+
+    },
     "Edit" : {
 
     },
@@ -109,6 +133,9 @@
 
     },
     "Licences" : {
+
+    },
+    "Loading Bitcoin address..." : {
 
     },
     "Loading..." : {
@@ -199,19 +226,25 @@
     "PLN" : {
 
     },
-    "PLN 213769.69" : {
-
-    },
     "Polish PLN" : {
 
     },
     "Proceed to Checkout" : {
 
     },
+    "Processing" : {
+
+    },
     "Sajms0n" : {
 
     },
+    "Scan the QR code to send the payment." : {
+
+    },
     "See more" : {
+
+    },
+    "Send Bitcoin to the following address:" : {
 
     },
     "settingsButton" : {
@@ -231,6 +264,9 @@
 
     },
     "Stripe iOS" : {
+
+    },
+    "Success" : {
 
     },
     "ToasterCoder44" : {
