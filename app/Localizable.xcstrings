@@ -28,18 +28,6 @@
     "accountRegisteredContent" : {
 
     },
-    "Add Checkpoints" : {
-
-    },
-    "Add Planes" : {
-
-    },
-    "Add Soldiers" : {
-
-    },
-    "Add Tanks" : {
-
-    },
     "Amount" : {
 
     },
@@ -129,9 +117,6 @@
     "Done" : {
 
     },
-    "Draw Route" : {
-
-    },
     "Edit" : {
 
     },
@@ -154,9 +139,6 @@
 
     },
     "Hello, World!" : {
-
-    },
-    "Hide Route" : {
 
     },
     "kube3qq" : {
@@ -268,7 +250,8 @@
     "Proceed to Checkout" : {
 
     },
-    "Reset" : {
+    "Reset" : {},
+    "Processing" : {
 
     },
     "Sajms0n" : {
@@ -339,12 +322,6 @@
 
     },
     "Your phone number" : {
-
-    },
-    "Zoom In" : {
-
-    },
-    "Zoom Out" : {
 
     }
   },
