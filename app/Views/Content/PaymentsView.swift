@@ -1,6 +1,22 @@
+//
+//  PaymentsView.swift
+//  app
+//
+//  Created by Tomasz on 15/10/2024.
+//
+
 import SwiftUI
+import sdk
 
 struct PaymentsView: View {
+    
+    struct Transaction: Identifiable {
+        let id = UUID()
+        let date: String
+        let amount: Double
+        let status: String
+        let type: String
+    }
     
     public let cornerRadius: CGFloat = 12
     public let cellBackground: Color = Color.gray.opacity(0.2)
@@ -10,6 +26,8 @@ struct PaymentsView: View {
     @State private var showDepositView = false
     @State private var navigateToCheckout = false
     @State private var amount: String? = nil
+    @State private var balance: Double = 0
+    @State private var transactionsHistory: [Transaction] = []
     
     var body: some View {
         NavigationStack {
@@ -26,6 +44,23 @@ struct PaymentsView: View {
                 self.navigateToCheckout = true
             })
         }
+        .refreshable {
+            Task {
+                await SdkClient.shared.getBalance { balance in
+                    self.balance = balance ?? 0
+                }
+                await SdkClient.shared.getTransactionsHistory { transactions in
+                    self.transactionsHistory = transactions?.map { dict in
+                        Transaction(
+                            date: dict["date"] as? String ?? "Unknown Date",
+                            amount: dict["amount"] as? Double ?? 0.0,
+                            status: dict["status"] as? String ?? "Unknown",
+                            type: dict["type"] as? String ?? "Unknown"
+                        )
+                    } ?? []
+                }
+            }
+        }
         .background(
             NavigationLink(destination: {
                 if let amount = amount {
@@ -38,6 +73,16 @@ struct PaymentsView: View {
             }
             .hidden()
         )
+    }
+    
+    private var usdBalance: some View {
+        Text("$\(String(format: "%.2f", balance / 4 / 100))")
+            .font(.title)
+    }
+    
+    private var plnBalance: some View {
+        Text("\(String(format: "%.2f", balance / 100)) PLN")
+            .font(.title)
     }
     
     private var accountBalanceSection: some View {
@@ -55,11 +100,9 @@ struct PaymentsView: View {
                             
                             HStack {
                                 if (selectedCurrency == "US Dollar") {
-                                    Text("$213769.69")
-                                        .font(.title)
+                                   usdBalance
                                 } else {
-                                    Text("213769.69 PLN")
-                                        .font(.title)
+                                    plnBalance
                                 }
           
                                 Spacer()
@@ -137,76 +180,64 @@ struct PaymentsView: View {
                 .cornerRadius(cornerRadius)
         }.padding([.leading, .trailing], 3)
         .padding(.bottom, 0)
+        .onAppear() {
+            Task {
+                await SdkClient.shared.getBalance { balance in
+                    self.balance = balance ?? 0
+                }
+                
+                await SdkClient.shared.getTransactionsHistory { transactions in
+                    self.transactionsHistory = transactions?.map { dict in
+                        Transaction(
+                            date: dict["date"] as? String ?? "Unknown Date",
+                            amount: dict["amount"] as? Double ?? 0.0,
+                            status: dict["status"] as? String ?? "Unknown",
+                            type: dict["type"] as? String ?? "Unknown"
+                        )
+                    } ?? []
+                }
+            }
+        }
     }
     
     private var transactionsSection: some View {
         Form {
             Section(header: Text("Transactions")) {
-                HStack {
-                    Image("bitcoin")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 38, height: 38)
-                        .clipShape(Circle())
-                        .padding(.trailing)
-                    
-                    VStack(alignment: .leading) {
-                        Text("Deposit")
-                            .font(.headline)
+                ForEach(transactionsHistory) { transaction in
+                    HStack {
+                        Image(systemName: "creditcard.circle.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 38, height: 38)
+                            .clipShape(Circle())
+                            .padding(.trailing)
+                            .foregroundColor(.accentColor)
                         
-                        Text("31 Feb 2024")
-                            .font(.caption2)
-                        
-                        HStack {
-                            Image(systemName: "arrow.trianglehead.clockwise")
-                                .font(.caption)
-                                .foregroundColor(.orange)
+                        VStack(alignment: .leading) {
+                            Text(transaction.type)
+                                .font(.headline)
                             
-                            Text("Processing")
-                                .font(.caption)
-                                .foregroundColor(.orange)
-                                .padding(.leading, -6)
-                        }
-                    }
-                    
-                    Spacer()
-                    
-                    Text("+2137.69 PLN")
-                        .foregroundColor(.orange)
-                }
-                
-                HStack {
-                    Image(systemName: "creditcard.circle.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 38, height: 38)
-                        .clipShape(Circle())
-                        .padding(.trailing)
-                        .foregroundColor(.accentColor)
-                    
-                    VStack(alignment: .leading) {
-                        Text("Deposit")
-                            .font(.headline)
-                        
-                        Text("31 Feb 2024")
-                            .font(.caption2)
-                        
-                        HStack {
-                            Image(systemName: "checkmark.circle")
-                                .font(.caption)
-                                .foregroundColor(.green)
+                            Text(transaction.date)
+                                .font(.caption2)
                             
-                            Text("Success")
-                                .font(.caption)
-                                .foregroundColor(.green)
-                                .padding(.leading, -6)
+                            HStack {
+                                let statusColor: Color = transaction.status == "Success" ? .green : .orange
+                                Image(systemName: transaction.status == "Success" ? "checkmark.circle" : "arrow.trianglehead.clockwise")
+                                    .font(.caption)
+                                    .foregroundColor(statusColor)
+                                
+                                Text(transaction.status)
+                                    .font(.caption)
+                                    .foregroundColor(statusColor)
+                                    .padding(.leading, -6)
+                            }
                         }
+                        
+                        Spacer()
+                        
+                        Text("\(transaction.amount) PLN")
+                            .foregroundColor(transaction.status == "Success" ? .green : .orange)
                     }
-                    
-                    Spacer()
-                    
-                    Text("+2137.69 PLN")
-                        .foregroundColor(.green)
                 }
             }
         }.padding(.top, -10)
