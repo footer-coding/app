@@ -19,7 +19,7 @@ struct NavbarView: View {
                     }
                 ManageView()
                     .tabItem {
-                        Label("manageButton", systemImage: "person")
+                        Label("Manage", systemImage: "person")
                             .accessibility(label: Text("manageButton"))
                     }
                 SettingsView()

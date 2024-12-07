@@ -61,6 +61,12 @@
     "Choose Payment Method" : {
 
     },
+    "Choose the best option for your needs" : {
+
+    },
+    "Choose your plan" : {
+
+    },
     "Clerk iOS" : {
 
     },
@@ -92,9 +98,6 @@
           }
         }
       }
-    },
-    "dawda" : {
-
     },
     "Deposit" : {
 
@@ -135,10 +138,13 @@
     "Go to Map" : {
 
     },
-    "Go to Payments" : {
+    "Go to Shop" : {
 
     },
     "Hello, World!" : {
+
+    },
+    "Jeśli nie wykupisz dostępu, masz do dyspozycji jedną symulację dziennie. Po wykupieniu dostępu uzyskasz możliwość wykonywania nieograniczonej liczby symulacji." : {
 
     },
     "kube3qq" : {
@@ -179,7 +185,16 @@
     "Manage" : {
 
     },
+    "Manage Options" : {
+
+    },
     "manageButton" : {
+
+    },
+    "Możesz także dokupić jednostki, co pozwoli Ci dowodzić nieograniczoną ilością żołnierzy!" : {
+
+    },
+    "Nie jesteś zalogowany" : {
 
     },
     "notLoggedIn" : {
@@ -247,11 +262,13 @@
     "Polish PLN" : {
 
     },
+    "Prices are shown in PLN (Polish Zloty)" : {
+
+    },
     "Proceed to Checkout" : {
 
     },
-    "Reset" : {},
-    "Processing" : {
+    "Proceed to Payment" : {
 
     },
     "Sajms0n" : {
@@ -275,6 +292,9 @@
           }
         }
       }
+    },
+    "Shop Options" : {
+
     },
     "Show Control Zones" : {
 
@@ -303,25 +323,34 @@
     "Transactions" : {
 
     },
+    "Twoim zadaniem jest poprowadzenie swojej armii do zwycięstwa w symulacji! Masz określoną ilość jednostek, którymi możesz dowodzić, aby osiągnąć sukces." : {
+
+    },
     "US Dollar" : {
 
     },
     "Username" : {
 
     },
+    "Witaj Generale!" : {
+
+    },
     "Withdrawal" : {
 
     },
-    "Wpisz cos" : {
+    "Wpisz coś" : {
 
     },
-    "Wyslij" : {
+    "Wyślij" : {
 
     },
     "Your email address" : {
 
     },
     "Your phone number" : {
+
+    },
+    "Zaloguj się" : {
 
     }
   },

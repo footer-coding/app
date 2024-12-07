@@ -1,38 +1,71 @@
-//
-//  ManageView.swift
-//  app
-//
-//  Created by Szymon Dacków on 06/12/2024.
-//
-
 import SwiftUI
 
 struct ManageView: View {
+    // Define custom color for blue
+    let customBlue = Color(red: 46 / 255, green: 142 / 255, blue: 206 / 255)
+    
     var body: some View {
         NavigationView {
-            VStack(spacing: 20) {
-                NavigationLink(destination: MapView()) {
-                    Text("Go to Map")
-                        .font(.headline)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
+            ZStack {
+                // Background gradient
+                LinearGradient(
+                    gradient: Gradient(colors: [customBlue.opacity(0.6), Color.white.opacity(0.8)]),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .edgesIgnoringSafeArea(.all)
                 
-                NavigationLink(destination: PaymentsView()) {
-                    Text("Go to Payments")
-                        .font(.headline)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.green)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                VStack(spacing: 30) {
+                    Text("Manage Options")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(customBlue)
+                        .padding(.top, 20)
+                    
+                    NavigationLink(destination: MapView()) {
+                        HStack {
+                            Image(systemName: "map.fill")
+                                .font(.title)
+                                .foregroundColor(.white)
+                            Text("Go to Map")
+                                .font(.headline)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.white)
+                        }
+                        .frame(maxWidth: .infinity, minHeight: 60)
+                        .background(LinearGradient(
+                            gradient: Gradient(colors: [customBlue, Color.white]),
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        ))
+                        .cornerRadius(15)
+                        .shadow(color: customBlue.opacity(0.4), radius: 10, x: 0, y: 5)
+                        .padding(.horizontal)
+                    }
+                    
+                    NavigationLink(destination: ShopView()) {
+                        HStack {
+                            Image(systemName: "cart.fill")
+                                .font(.title)
+                                .foregroundColor(.white)
+                            Text("Go to Shop")
+                                .font(.headline)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.white)
+                        }
+                        .frame(maxWidth: .infinity, minHeight: 60)
+                        .background(LinearGradient(
+                            gradient: Gradient(colors: [customBlue, Color.white]),
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        ))
+                        .cornerRadius(15)
+                        .shadow(color: customBlue.opacity(0.4), radius: 10, x: 0, y: 5)
+                        .padding(.horizontal)
+                    }
                 }
+                .padding()
             }
-            .padding()
-            .navigationTitle("Manage")
         }
     }
 }

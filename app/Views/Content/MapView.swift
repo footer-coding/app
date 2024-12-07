@@ -99,7 +99,7 @@ struct MapView: View {
                                     .background(Circle().foregroundColor(Color.blue.opacity(0.3)))
                                     .frame(width: 10, height: 10)
                             case .tank(let tank):
-                                Image("military-tank")
+                                Image("military-ttank")
                                     .resizable()
                                     .frame(width: 20, height: 20)
                                     .foregroundColor(.green)
@@ -228,35 +228,35 @@ struct MapView: View {
                             .padding(.bottom, 5)
                             
                             HStack {
-                                controlButton(title: "Tanks", action: {
+                                controlButton(iconName: "shield", action: {
                                     addingTanks = true
                                     addingSoldiers = false
                                     addingPlanes = false
                                     addingCheckpoints = false
                                     showControls = false
                                 })
-                                controlButton(title: "Soldiers", action: {
+                                controlButton(iconName: "figure.walk", action: {
                                     addingTanks = false
                                     addingSoldiers = true
                                     addingPlanes = false
                                     addingCheckpoints = false
                                     showControls = false
                                 })
-                                controlButton(title: "Planes", action: {
+                                controlButton(iconName: "airplane", action: {
                                     addingTanks = false
                                     addingSoldiers = false
                                     addingPlanes = true
                                     addingCheckpoints = false
                                     showControls = false
                                 })
-                                controlButton(title: "Checkpoint", action: {
+                                controlButton(iconName: "mappin.and.ellipse", action: {
                                     addingTanks = false
                                     addingSoldiers = false
                                     addingPlanes = false
                                     addingCheckpoints = true
                                     showControls = false
                                 })
-                                controlButton(title: "Reset", action: { reset(); showControls = false })
+                                controlButton(iconName: "arrow.counterclockwise", action: { reset(); showControls = false })
                             }
                             .padding(.bottom, 5)
                             
@@ -292,19 +292,29 @@ struct MapView: View {
                planes.map { MapItem.plane($0) }
     }
     
-    private func controlButton(title: String, action: @escaping () -> Void, textColor: Color = .blue) -> some View {
+    private func controlButton(title: String? = nil, iconName: String? = nil, action: @escaping () -> Void, textColor: Color = .blue) -> some View {
         Button(action: action) {
-            Text(title)
-                .frame(maxWidth: .infinity)
-                .padding(10)
-                .background(Color.white)
-                .foregroundColor(textColor)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.blue, lineWidth: 2)
-                )
-                .cornerRadius(8)
-                .lineLimit(1) // Ensure text does not wrap
+            if let iconName = iconName {
+                Image(systemName: iconName)
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .padding(10)
+                    .background(Color.white)
+                    .clipShape(Circle())
+                    .shadow(radius: 5)
+            } else if let title = title {
+                Text(title)
+                    .frame(maxWidth: .infinity)
+                    .padding(10)
+                    .background(Color.white)
+                    .foregroundColor(textColor)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.blue, lineWidth: 2)
+                    )
+                    .cornerRadius(8)
+                    .lineLimit(1) // Ensure text does not wrap
+            }
         }
     }
     
