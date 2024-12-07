@@ -13,9 +13,6 @@ extension SdkClient {
     @MainActor private func request(request: URLRequest, completion: @escaping @Sendable (Result<JSON, Error>) -> Void) {
         var request = request
         
-        //        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        //        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             if(error?._code.littleEndian == -1004) {
                 completion(.failure(SdkError.NoInternetConnection))
@@ -130,6 +127,108 @@ extension SdkClient {
                     print("Address not found in response")
                     completion(nil)
                 }
+                
+            } catch {
+                print("Error: \(error)")
+                completion(nil)
+            }
+        }
+    }
+    
+    @MainActor public func getBalance(completion: @escaping (Double?) -> Void) {
+        let urlString: String = "\(SdkClient.shared.API_URL)/get-balance"
+        print(urlString)
+        
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL: \(urlString)")
+            completion(nil)
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        Task {
+            do {
+                let tokenOptions = Session.GetTokenOptions(template: "JWT")
+                print(tokenOptions)
+                
+                if let token = try await Clerk.shared.session?.getToken(tokenOptions)?.jwt {
+                    print(token)
+                    request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+                }
+                
+                let (data, response) = try await URLSession.shared.data(for: request)
+                
+                if let httpResponse = response as? HTTPURLResponse {
+                    print("HTTP Response Status Code: \(httpResponse.statusCode)")
+                }
+                
+                guard let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+                    print("Failed to parse JSON response")
+                    completion(nil)
+                    return
+                }
+                
+                print("Success: \(json)")
+                
+                if let balance = json["balance"] as? Double {
+                    print("Balance: \(balance)")
+                    completion(balance)
+                } else {
+                    print("Balance not found in response")
+                    completion(nil)
+                }
+                
+            } catch {
+                print("Error: \(error)")
+                completion(nil)
+            }
+        }
+    }
+    
+    @MainActor public func getTransactionsHistory(completion: @escaping ([[String: Any]]?) -> Void) {
+        let urlString: String = "\(SdkClient.shared.API_URL)/transaction-history"
+        print(urlString)
+        
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL: \(urlString)")
+            completion(nil)
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        Task {
+            do {
+                let tokenOptions = Session.GetTokenOptions(template: "JWT")
+                print(tokenOptions)
+                
+                if let token = try await Clerk.shared.session?.getToken(tokenOptions)?.jwt {
+                    print(token)
+                    request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+                }
+                
+                let (data, response) = try await URLSession.shared.data(for: request)
+                
+                if let httpResponse = response as? HTTPURLResponse {
+                    print("HTTP Response Status Code: \(httpResponse.statusCode)")
+                }
+                
+                guard let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] else {
+                    print("Failed to parse JSON response")
+                    completion(nil)
+                    return
+                }
+                
+                print("Success: \(json)")
+                
+                completion(json)
                 
             } catch {
                 print("Error: \(error)")

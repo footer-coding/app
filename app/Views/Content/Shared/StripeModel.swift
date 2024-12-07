@@ -1,6 +1,7 @@
 import SwiftUI
 import StripePaymentSheet
 import AppNotifications
+import ClerkSDK
 
 class StripeModel: ObservableObject {
     var amount: String
@@ -12,11 +13,25 @@ class StripeModel: ObservableObject {
         self.amount = amount
     }
     
-    func preparePaymentSheet() {
+    func preparePaymentSheet() async {
         // MARK: Fetch the PaymentIntent and Customer information from the backend
         var request = URLRequest(url: backendCheckoutUrl)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let tokenOptions = Session.GetTokenOptions(template: "JWT")
+        
+        print(tokenOptions)
+        
+        do {
+            if let token = try await Clerk.shared.session?.getToken(tokenOptions)?.jwt {
+                print(token)
+                request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            }
+        } catch {
+            print("Error: \(error)")
+        }
+        
         request.httpBody = try? JSONSerialization.data(withJSONObject: ["items": [["amount": Float(amount)! * 100]]], options: []) // Example request body
         
         print("dupa1")
@@ -115,7 +130,7 @@ struct CheckoutView: View {
             }
         }
         .padding()
-        .onAppear { model.preparePaymentSheet() }
+        .onAppear { Task { await model.preparePaymentSheet() } }
 //        .onDisappear {
 //            onDismiss()
 //        }

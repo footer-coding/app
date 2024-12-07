@@ -4,19 +4,16 @@
     "" : {
 
     },
+    "%@ PLN" : {
+
+    },
+    "%lf PLN" : {
+
+    },
     "%lld" : {
 
     },
-    "+2137.69 PLN" : {
-
-    },
-    "$213769.69" : {
-
-    },
-    "31 Feb 2024" : {
-
-    },
-    "213769.69 PLN" : {
+    "$%@" : {
 
     },
     "Account" : {
@@ -253,6 +250,7 @@
     "Proceed to Checkout" : {
 
     },
+    "Reset" : {},
     "Processing" : {
 
     },
@@ -294,9 +292,6 @@
 
     },
     "Stripe iOS" : {
-
-    },
-    "Success" : {
 
     },
     "ToasterCoder44" : {
