@@ -34,27 +34,36 @@ enum MapItem: Identifiable {
     }
 }
 
-struct Checkpoint {
+struct Checkpoint: Identifiable {
     let id = UUID()
     var coordinate: CLLocationCoordinate2D
 }
 
-struct Tank {
+struct Tank: Identifiable {
     let id = UUID()
     var coordinate: CLLocationCoordinate2D
     let amount: Int
+    var currentCheckpointIndex: Int = 0
 }
 
-struct Soldier {
+struct Soldier: Identifiable {
     let id = UUID()
     var coordinate: CLLocationCoordinate2D
     let amount: Int
+    var currentCheckpointIndex: Int = 0
 }
 
-struct Plane {
+struct Plane: Identifiable {
     let id = UUID()
     var coordinate: CLLocationCoordinate2D
     let amount: Int
+    var currentCheckpointIndex: Int = 0
+}
+
+extension CLLocationCoordinate2D: Equatable {
+    public static func == (lhs: CLLocationCoordinate2D, rhs: CLLocationCoordinate2D) -> Bool {
+        return lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude
+    }
 }
 
 struct MapView: View {
@@ -72,6 +81,10 @@ struct MapView: View {
     @State private var addingPlanes = false
     @State private var addingCheckpoints = false
     @State private var amount = 1
+    @State private var timer: Timer?
+    @State private var showControls = false
+    
+    private let maxZoomOutDelta: CLLocationDegrees = 180.0 // Maximum zoom out level
     
     var body: some View {
         VStack {
@@ -86,7 +99,7 @@ struct MapView: View {
                                     .background(Circle().foregroundColor(Color.blue.opacity(0.3)))
                                     .frame(width: 10, height: 10)
                             case .tank(let tank):
-                                Image(systemName: "car.fill")
+                                Image("military-tank")
                                     .resizable()
                                     .frame(width: 20, height: 20)
                                     .foregroundColor(.green)
@@ -94,15 +107,15 @@ struct MapView: View {
                                     .font(.caption)
                                     .foregroundColor(.black)
                             case .soldier(let soldier):
-                                Image(systemName: "person.fill")
+                                Image("NoBackgroundIcon")
                                     .resizable()
-                                    .frame(width: 20, height: 20)
+                                    .frame(width: 40, height: 40)
                                     .foregroundColor(.brown)
                                 Text("\(soldier.amount)")
                                     .font(.caption)
                                     .foregroundColor(.black)
                             case .plane(let plane):
-                                Image(systemName: "airplane")
+                                Image("fighter-jet")
                                     .resizable()
                                     .frame(width: 20, height: 20)
                                     .foregroundColor(.blue)
@@ -155,114 +168,118 @@ struct MapView: View {
                     RoutePath(checkpoints: checkpoints, region: region)
                         .stroke(Color.red, lineWidth: 2)
                 }
-            }
-            
-            VStack {
-                HStack {
-                    Button(action: {
-                        zoomIn()
-                    }) {
-                        Text("Zoom In")
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
-                    }
-                    
-                    Button(action: {
-                        zoomOut()
-                    }) {
-                        Text("Zoom Out")
-                            .padding()
-                            .background(Color.red)
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
-                    }
-                    
-                    Button(action: {
-                        drawRoute.toggle()
-                    }) {
-                        Text(drawRoute ? "Hide Route" : "Draw Route")
-                            .padding()
-                            .background(Color.green)
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
-                    }
-                }
-                .padding()
                 
-                HStack {
-                    Button(action: {
-                        addingTanks = true
-                        addingSoldiers = false
-                        addingPlanes = false
-                        addingCheckpoints = false
-                    }) {
-                        Text("Add Tanks")
-                            .padding()
-                            .background(Color.orange)
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
-                    }
-                    
-                    Button(action: {
-                        addingTanks = false
-                        addingSoldiers = true
-                        addingPlanes = false
-                        addingCheckpoints = false
-                    }) {
-                        Text("Add Soldiers")
-                            .padding()
-                            .background(Color.purple)
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
-                    }
-                    
-                    Button(action: {
-                        addingTanks = false
-                        addingSoldiers = false
-                        addingPlanes = true
-                        addingCheckpoints = false
-                    }) {
-                        Text("Add Planes")
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
-                    }
-                    
-                    Button(action: {
-                        addingTanks = false
-                        addingSoldiers = false
-                        addingPlanes = false
-                        addingCheckpoints = true
-                    }) {
-                        Text("Add Checkpoints")
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
-                    }
-                    
-                    Button(action: {
-                        reset()
-                    }) {
-                        Text("Reset")
-                            .padding()
-                            .background(Color.gray)
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
-                    }
-                }
-                .padding()
-                
-                HStack {
-                    Text("Amount:")
-                    TextField("Amount", value: $amount, formatter: NumberFormatter())
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .keyboardType(.numberPad)
-                        .frame(width: 60)
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            withAnimation {
+                                showControls.toggle()
+                            }
+                        }) {
+                            Image(systemName: "gearshape.fill")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .padding()
+                                .background(Color.white)
+                                .clipShape(Circle())
+                                .shadow(radius: 5)
+                        }
                         .padding()
+                    }
+                }
+                
+                VStack {
+                    HStack {
+                        Spacer()
+                        VStack {
+                            Button(action: zoomIn) {
+                                Image(systemName: "plus.magnifyingglass")
+                                    .resizable()
+                                    .frame(width: 30, height: 30)
+                                    .padding()
+                                    .background(Color.white)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 5)
+                            }
+                            Button(action: zoomOut) {
+                                Image(systemName: "minus.magnifyingglass")
+                                    .resizable()
+                                    .frame(width: 30, height: 30)
+                                    .padding()
+                                    .background(Color.white)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 5)
+                            }
+                        }
+                        .padding()
+                    }
+                    Spacer()
+                }
+                
+                if showControls {
+                    VStack {
+                        Spacer()
+                        VStack {
+                            HStack {
+                                controlButton(title: drawRoute ? "Hide Route" : "Draw Route", action: { drawRoute.toggle(); showControls = false })
+                            }
+                            .padding(.bottom, 5)
+                            
+                            HStack {
+                                controlButton(title: "Tanks", action: {
+                                    addingTanks = true
+                                    addingSoldiers = false
+                                    addingPlanes = false
+                                    addingCheckpoints = false
+                                    showControls = false
+                                })
+                                controlButton(title: "Soldiers", action: {
+                                    addingTanks = false
+                                    addingSoldiers = true
+                                    addingPlanes = false
+                                    addingCheckpoints = false
+                                    showControls = false
+                                })
+                                controlButton(title: "Planes", action: {
+                                    addingTanks = false
+                                    addingSoldiers = false
+                                    addingPlanes = true
+                                    addingCheckpoints = false
+                                    showControls = false
+                                })
+                                controlButton(title: "Checkpoint", action: {
+                                    addingTanks = false
+                                    addingSoldiers = false
+                                    addingPlanes = false
+                                    addingCheckpoints = true
+                                    showControls = false
+                                })
+                                controlButton(title: "Reset", action: { reset(); showControls = false })
+                            }
+                            .padding(.bottom, 5)
+                            
+                            HStack {
+                                Text("Amount:")
+                                    .foregroundColor(.blue)
+                                TextField("Amount", value: $amount, formatter: NumberFormatter())
+                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                    .keyboardType(.numberPad)
+                                    .frame(width: 60)
+                                    .padding()
+                            }
+                            
+                            HStack {
+                                controlButton(title: "Start", action: { startMoving(); showControls = false })
+                                controlButton(title: "Stop", action: { stopMoving(); showControls = false })
+                            }
+                        }
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                        .shadow(radius: 10)
+                        .padding()
+                    }
                 }
             }
         }
@@ -275,6 +292,21 @@ struct MapView: View {
                planes.map { MapItem.plane($0) }
     }
     
+    private func controlButton(title: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title)
+                .frame(maxWidth: .infinity)
+                .padding(10)
+                .background(Color.white)
+                .foregroundColor(.blue)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.blue, lineWidth: 2)
+                )
+                .cornerRadius(8)
+        }
+    }
+    
     private func zoomIn() {
         var span = region.span
         span.latitudeDelta /= 2
@@ -284,8 +316,8 @@ struct MapView: View {
     
     private func zoomOut() {
         var span = region.span
-        span.latitudeDelta *= 2
-        span.longitudeDelta *= 2
+        span.latitudeDelta = min(span.latitudeDelta * 2, maxZoomOutDelta)
+        span.longitudeDelta = min(span.longitudeDelta * 2, maxZoomOutDelta)
         region.span = span
     }
     
@@ -299,11 +331,91 @@ struct MapView: View {
         addingSoldiers = false
         addingPlanes = false
         addingCheckpoints = false
+        timer?.invalidate()
+        timer = nil
     }
     
     private func convertToCoordinate(from point: CGPoint, in region: MKCoordinateRegion) -> CLLocationCoordinate2D {
         let mapPoint = MKMapPoint(x: Double(point.x), y: Double(point.y))
         return mapPoint.coordinate
+    }
+    
+    private func startMoving() {
+        print("Start Moving called")
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+            moveItems()
+        }
+    }
+    
+    private func stopMoving() {
+        print("Stop Moving called")
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    private func moveItems() {
+        print("Move Items called")
+        guard checkpoints.count > 1 else { return }
+        
+        var updatedTanks = tanks
+        var updatedSoldiers = soldiers
+        var updatedPlanes = planes
+        
+        for i in 0..<updatedTanks.count {
+            let nextCheckpoint = checkpoints[updatedTanks[i].currentCheckpointIndex].coordinate
+            updatedTanks[i].coordinate = moveTowards(current: updatedTanks[i].coordinate, target: nextCheckpoint)
+            if updatedTanks[i].coordinate == nextCheckpoint {
+                if updatedTanks[i].currentCheckpointIndex == checkpoints.count - 1 {
+                    // Stop moving if it's the last checkpoint
+                    continue
+                }
+                updatedTanks[i].currentCheckpointIndex = (updatedTanks[i].currentCheckpointIndex + 1) % checkpoints.count
+            }
+        }
+        
+        for i in 0..<updatedSoldiers.count {
+            let nextCheckpoint = checkpoints[soldiers[i].currentCheckpointIndex].coordinate
+            updatedSoldiers[i].coordinate = moveTowards(current: updatedSoldiers[i].coordinate, target: nextCheckpoint)
+            if updatedSoldiers[i].coordinate == nextCheckpoint {
+                if updatedSoldiers[i].currentCheckpointIndex == checkpoints.count - 1 {
+                    // Stop moving if it's the last checkpoint
+                    continue
+                }
+                updatedSoldiers[i].currentCheckpointIndex = (updatedSoldiers[i].currentCheckpointIndex + 1) % checkpoints.count
+            }
+        }
+        
+        for i in 0..<updatedPlanes.count {
+            let nextCheckpoint = checkpoints[updatedPlanes[i].currentCheckpointIndex].coordinate
+            updatedPlanes[i].coordinate = moveTowards(current: updatedPlanes[i].coordinate, target: nextCheckpoint)
+            if updatedPlanes[i].coordinate == nextCheckpoint {
+                if updatedPlanes[i].currentCheckpointIndex == checkpoints.count - 1 {
+                    // Stop moving if it's the last checkpoint
+                    continue
+                }
+                updatedPlanes[i].currentCheckpointIndex = (updatedPlanes[i].currentCheckpointIndex + 1) % checkpoints.count
+            }
+        }
+        
+        // Update the state with the new positions
+        tanks = updatedTanks
+        soldiers = updatedSoldiers
+        planes = updatedPlanes
+    }
+    
+    private func moveTowards(current: CLLocationCoordinate2D, target: CLLocationCoordinate2D) -> CLLocationCoordinate2D {
+        let latDiff = target.latitude - current.latitude
+        let lonDiff = target.longitude - current.longitude
+        let distance = sqrt(latDiff * latDiff + lonDiff * lonDiff)
+        
+        guard distance > 0.0001 else { return target }
+        
+        let step = 0.0001 / distance
+        let newLat = current.latitude + latDiff * step
+        let newLon = current.longitude + lonDiff * step
+        
+        return CLLocationCoordinate2D(latitude: newLat, longitude: newLon)
     }
 }
 
