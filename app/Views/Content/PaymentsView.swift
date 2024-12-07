@@ -12,10 +12,22 @@ struct PaymentsView: View {
     
     struct Transaction: Identifiable {
         let id = UUID()
-        let date: String
+        let date: Date
         let amount: Double
         let status: String
         let type: String
+    }
+    
+    private func formatDate(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "d MMM yyyy HH:mm"
+        return dateFormatter.string(from: date)
+    }
+    
+    private func parseDate(_ dateString: String) -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        return dateFormatter.date(from: dateString) ?? Date()
     }
     
     public let cornerRadius: CGFloat = 12
@@ -52,12 +64,12 @@ struct PaymentsView: View {
                 await SdkClient.shared.getTransactionsHistory { transactions in
                     self.transactionsHistory = transactions?.map { dict in
                         Transaction(
-                            date: dict["date"] as? String ?? "Unknown Date",
+                            date: parseDate(dict["date"] as? String ?? ""),
                             amount: dict["amount"] as? Double ?? 0.0,
                             status: dict["status"] as? String ?? "Unknown",
-                            type: dict["type"] as? String ?? "Unknown"
+                            type: dict["type"] as? String ?? "Deposit"
                         )
-                    } ?? []
+                    }.sorted(by: { $0.date > $1.date }) ?? []
                 }
             }
         }
@@ -189,12 +201,12 @@ struct PaymentsView: View {
                 await SdkClient.shared.getTransactionsHistory { transactions in
                     self.transactionsHistory = transactions?.map { dict in
                         Transaction(
-                            date: dict["date"] as? String ?? "Unknown Date",
+                            date: parseDate(dict["date"] as? String ?? ""),
                             amount: dict["amount"] as? Double ?? 0.0,
                             status: dict["status"] as? String ?? "Unknown",
-                            type: dict["type"] as? String ?? "Unknown"
+                            type: dict["type"] as? String ?? "Deposit"
                         )
-                    } ?? []
+                    }.sorted(by: { $0.date > $1.date }) ?? []
                 }
             }
         }
@@ -205,7 +217,7 @@ struct PaymentsView: View {
             Section(header: Text("Transactions")) {
                 ForEach(transactionsHistory) { transaction in
                     HStack {
-                        Image(systemName: "creditcard.circle.fill")
+                        Image(systemName: transaction.type == "Bitcoin" ? "bitcoinsign.circle.fill" : "creditcard.circle.fill")
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 38, height: 38)
@@ -217,12 +229,12 @@ struct PaymentsView: View {
                             Text(transaction.type)
                                 .font(.headline)
                             
-                            Text(transaction.date)
+                            Text(formatDate(transaction.date))
                                 .font(.caption2)
                             
                             HStack {
-                                let statusColor: Color = transaction.status == "Success" ? .green : .orange
-                                Image(systemName: transaction.status == "Success" ? "checkmark.circle" : "arrow.trianglehead.clockwise")
+                                let statusColor: Color = transaction.status == "confirmed" ? .green : .orange
+                                Image(systemName: transaction.status == "confirmed" ? "checkmark.circle" : "arrow.trianglehead.clockwise")
                                     .font(.caption)
                                     .foregroundColor(statusColor)
                                 
@@ -235,8 +247,8 @@ struct PaymentsView: View {
                         
                         Spacer()
                         
-                        Text("\(transaction.amount) PLN")
-                            .foregroundColor(transaction.status == "Success" ? .green : .orange)
+                        Text("+\(String(format: "%.2f", transaction.amount/100)) PLN")
+                            .foregroundColor(transaction.status == "confirmed" ? .green : .orange)
                     }
                 }
             }
