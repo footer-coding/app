@@ -59,26 +59,26 @@ struct DashboardView: View {
               
                     
                     // Zachowano TextField i Button do przesyłania danych do API
-                    TextField("Wpisz coś", text: $cos)
-                        .autocapitalization(.none)
-                        .font(Font.body.weight(Font.Weight.medium))
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal)
-                        .frame(height: cellHeight)
-                        .background(cellBackground)
-                    
-                    Button("Wyślij") {
-                        Task {
-                            await SdkClient.shared.sendToApi(cos: cos)
-                        }
-                    }
-                    .font(.headline)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal)
-                    .frame(height: cellHeight)
-                    .frame(maxWidth: .infinity)
-                    .background(Color.accentColor.opacity(0.2))
-                    .cornerRadius(cornerRadius)
+//                    TextField("Wpisz coś", text: $cos)
+//                        .autocapitalization(.none)
+//                        .font(Font.body.weight(Font.Weight.medium))
+//                        .multilineTextAlignment(.center)
+//                        .padding(.horizontal)
+//                        .frame(height: cellHeight)
+//                        .background(cellBackground)
+//                    
+//                    Button("Wyślij") {
+//                        Task {
+//                            await SdkClient.shared.sendToApi(cos: cos)
+//                        }
+//                    }
+//                    .font(.headline)
+//                    .multilineTextAlignment(.center)
+//                    .padding(.horizontal)
+//                    .frame(height: cellHeight)
+//                    .frame(maxWidth: .infinity)
+//                    .background(Color.accentColor.opacity(0.2))
+//                    .cornerRadius(cornerRadius)
                 }
                 .padding()
                 Spacer()

@@ -1,7 +1,11 @@
 import SwiftUI
+import sdk
+import AppNotifications
 
 struct ShopView: View {
     @State private var selectedOption: Int? = nil
+    @State private var showAlert = false
+    @State private var alertMessage = ""
     
     private let cellHeight: CGFloat = 50
     private let cornerRadius: CGFloat = 10
@@ -61,7 +65,11 @@ struct ShopView: View {
                     }
                     
                     Section {
-                        NavigationLink(destination: PaymentsView()) {
+                        Button(action: {
+                            Task {
+                                await handlePurchase()
+                            }
+                        }) {
                             Text("Proceed to Payment")
                                 .font(.headline)
                                 .multilineTextAlignment(.center)
@@ -80,6 +88,31 @@ struct ShopView: View {
                 footer
             }
             .background(Color("BackgroundColor").edgesIgnoringSafeArea(.all))
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text("Purchase Result"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+            }
+        }
+    }
+    
+    private func handlePurchase() async {
+        guard let selectedOption = selectedOption else { return }
+        
+        if selectedOption == 1 {
+            do {
+                Task {
+                    try await SdkClient.shared.purchaseFullVersion { success in
+                        AppNotifications.shared.notification = .init(success: "Purchase successful!")
+                    }
+                }
+                alertMessage = "Purchase successful!"
+            } catch {
+                alertMessage = "Purchase failed: \(error.localizedDescription)"
+            }
+            showAlert = true
+        } else {
+            // Handle other purchase options if needed
+            alertMessage = "This option is not implemented yet."
+            showAlert = true
         }
     }
 }
@@ -102,8 +135,6 @@ struct RadioButton: View {
         .buttonStyle(PlainButtonStyle())
     }
 }
-
-
 
 #Preview {
     ShopView()
