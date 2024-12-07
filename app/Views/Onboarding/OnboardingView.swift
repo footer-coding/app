@@ -1,10 +1,3 @@
-//
-//  OnboardingView.swift
-//  app
-//
-//  Created by Tomasz on 04/10/2024.
-//
-
 import SwiftUI
 
 fileprivate struct InformationDetailView: View {
@@ -46,14 +39,14 @@ struct OnboardingView: View {
     var body: some View {
             VStack() {
                 Spacer()
-                Image("NoBackgroundIcon")
+                Image("WarSimulatorIcon")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: 162)
                     .cornerRadius(20)
                     .padding(.bottom, -40)
                 
-                Text("onboardingTitle")
+                Text("Welcome to WARCLE")
                     .font(.title)
                     .fontWeight(.semibold)
                     .padding()
@@ -64,15 +57,15 @@ struct OnboardingView: View {
                 HStack {
                     Spacer()
                     VStack(alignment: .leading) {
-                        InformationDetailView(title: "onboarding1Title", subtitle: "onboarding1Content", imageName: "bell")
-                        InformationDetailView(title: "onboarding2Title", subtitle: "onboarding2Content", imageName: "envelope")
-                        InformationDetailView(title: "onboarding3Title", subtitle: "onboarding3Content", imageName: "hare")
+                        InformationDetailView(title: "Command Your Army", subtitle: "Lead your troops to victory in epic battles.", imageName: "shield")
+                        InformationDetailView(title: "Strategize", subtitle: "Plan your moves and outsmart your enemies.", imageName: "map")
+                        InformationDetailView(title: "Upgrade", subtitle: "Enhance your units and unlock new abilities.", imageName: "star")
                     }.multilineTextAlignment(.leading)
                     Spacer()
                 }
                 Spacer()
                 Spacer()
-                Button("continueButton") { needsAppOnboarding = false }
+                Button("Start Your Campaign") { needsAppOnboarding = false }
                     .font(.headline)
                     .multilineTextAlignment(.center)
                     .padding()

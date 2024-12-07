@@ -73,6 +73,9 @@
     "Coding Night 2024" : {
 
     },
+    "Command Your Army" : {
+
+    },
     "Confirm" : {
 
     },
@@ -80,6 +83,7 @@
 
     },
     "continueButton" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -132,6 +136,9 @@
     "Email or username" : {
 
     },
+    "Enhance your units and unlock new abilities." : {
+
+    },
     "Footer" : {
 
     },
@@ -144,10 +151,13 @@
     "Hello, World!" : {
 
     },
-    "Jeśli nie wykupisz dostępu, masz do dyspozycji jedną symulację dziennie. Po wykupieniu dostępu uzyskasz możliwość wykonywania nieograniczonej liczby symulacji." : {
+    "Historia czeka na generała Twojego kalibru. Wykonaj pierwszy krok, przejmij dowodzenie i pokaż, że możesz osiągnąć wszystko! 🌟" : {
 
     },
     "kube3qq" : {
+
+    },
+    "Lead your troops to victory in epic battles." : {
 
     },
     "Licences" : {
@@ -191,9 +201,6 @@
     "manageButton" : {
 
     },
-    "Możesz także dokupić jednostki, co pozwoli Ci dowodzić nieograniczoną ilością żołnierzy!" : {
-
-    },
     "Nie jesteś zalogowany" : {
 
     },
@@ -208,28 +215,10 @@
         }
       }
     },
+    "Odblokuj pełną funkcjonalność, by dowodzić i zarządzać swoimi siłami w dowolny sposób. Twórz odważne strategie, pokonuj wyzwania i prowadź swoje armie do chwalebnych zwycięstw!" : {
+
+    },
     "OK" : {
-
-    },
-    "onboarding1Content" : {
-
-    },
-    "onboarding1Title" : {
-
-    },
-    "onboarding2Content" : {
-
-    },
-    "onboarding2Title" : {
-
-    },
-    "onboarding3Content" : {
-
-    },
-    "onboarding3Title" : {
-
-    },
-    "onboardingTitle" : {
 
     },
     "Open-source licences" : {
@@ -254,6 +243,9 @@
 
     },
     "Phone numer" : {
+
+    },
+    "Plan your moves and outsmart your enemies." : {
 
     },
     "Play Status" : {
@@ -317,6 +309,12 @@
     "Sign Out" : {
 
     },
+    "Start Your Campaign" : {
+
+    },
+    "Strategize" : {
+
+    },
     "Stripe iOS" : {
 
     },
@@ -329,13 +327,19 @@
     "Transactions" : {
 
     },
-    "Twoim zadaniem jest poprowadzenie swojej armii do zwycięstwa w symulacji! Masz określoną ilość jednostek, którymi możesz dowodzić, aby osiągnąć sukces." : {
+    "Twoja droga do mistrzostwa strategicznego zaczyna się teraz. Nasza aplikacja pozwala Ci zanurzyć się w realistycznej symulacji dowodzenia jednostkami wojskowymi, rozwijając Twoje umiejętności bez żadnych ograniczeń." : {
+
+    },
+    "Upgrade" : {
 
     },
     "US Dollar" : {
 
     },
     "Username" : {
+
+    },
+    "Welcome to WARCLE" : {
 
     },
     "Witaj Generale!" : {

@@ -35,26 +35,28 @@ struct DashboardView: View {
                         .multilineTextAlignment(.center)
                         .foregroundColor(.accentColor)
                     
-                    Text("Twoim zadaniem jest poprowadzenie swojej armii do zwycięstwa w symulacji! Masz określoną ilość jednostek, którymi możesz dowodzić, aby osiągnąć sukces.")
+                    Text("Twoja droga do mistrzostwa strategicznego zaczyna się teraz. Nasza aplikacja pozwala Ci zanurzyć się w realistycznej symulacji dowodzenia jednostkami wojskowymi, rozwijając Twoje umiejętności bez żadnych ograniczeń.")
                         .font(.body)
                         .multilineTextAlignment(.center)
                         .padding()
                         .background(cellBackground)
                         .cornerRadius(cornerRadius)
                     
-                    Text("Jeśli nie wykupisz dostępu, masz do dyspozycji jedną symulację dziennie. Po wykupieniu dostępu uzyskasz możliwość wykonywania nieograniczonej liczby symulacji.")
+                    Text("Odblokuj pełną funkcjonalność, by dowodzić i zarządzać swoimi siłami w dowolny sposób. Twórz odważne strategie, pokonuj wyzwania i prowadź swoje armie do chwalebnych zwycięstw!")
+
                         .font(.body)
                         .multilineTextAlignment(.center)
                         .padding()
                         .background(cellBackground)
                         .cornerRadius(cornerRadius)
                     
-                    Text("Możesz także dokupić jednostki, co pozwoli Ci dowodzić nieograniczoną ilością żołnierzy!")
+                    Text("Historia czeka na generała Twojego kalibru. Wykonaj pierwszy krok, przejmij dowodzenie i pokaż, że możesz osiągnąć wszystko! 🌟")
                         .font(.body)
                         .multilineTextAlignment(.center)
                         .padding()
                         .background(cellBackground)
                         .cornerRadius(cornerRadius)
+                    
                     
               
                     
