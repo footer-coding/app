@@ -7,10 +7,10 @@
     "%@ PLN" : {
 
     },
-    "%lf PLN" : {
+    "%lld" : {
 
     },
-    "%lld" : {
+    "+%@ PLN" : {
 
     },
     "$%@" : {
@@ -248,10 +248,6 @@
 
     },
     "Proceed to Checkout" : {
-
-    },
-    "Reset" : {},
-    "Processing" : {
 
     },
     "Sajms0n" : {
