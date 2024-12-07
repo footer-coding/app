@@ -217,7 +217,7 @@ struct PaymentsView: View {
             Section(header: Text("Transactions")) {
                 ForEach(transactionsHistory) { transaction in
                     HStack {
-                        Image(systemName: "creditcard.circle.fill")
+                        Image(systemName: transaction.type == "Bitcoin" ? "bitcoinsign.circle.fill" : "creditcard.circle.fill")
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 38, height: 38)
