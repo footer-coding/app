@@ -271,11 +271,11 @@ struct MapView: View {
                             }
                             
                             HStack {
-                                controlButton(title: "Start", action: { startMoving(); showControls = false })
-                                controlButton(title: "Stop", action: { stopMoving(); showControls = false })
+                                controlButton(title: "Start", action: { startMoving(); showControls = false }, textColor: .green)
+                                controlButton(title: "Stop", action: { stopMoving(); showControls = false }, textColor: .red)
                             }
                         }
-                        .background(Color.blue)
+                        .background(Color.white)
                         .cornerRadius(10)
                         .shadow(radius: 10)
                         .padding()
@@ -292,18 +292,19 @@ struct MapView: View {
                planes.map { MapItem.plane($0) }
     }
     
-    private func controlButton(title: String, action: @escaping () -> Void) -> some View {
+    private func controlButton(title: String, action: @escaping () -> Void, textColor: Color = .blue) -> some View {
         Button(action: action) {
             Text(title)
                 .frame(maxWidth: .infinity)
                 .padding(10)
                 .background(Color.white)
-                .foregroundColor(.blue)
+                .foregroundColor(textColor)
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
                         .stroke(Color.blue, lineWidth: 2)
                 )
                 .cornerRadius(8)
+                .lineLimit(1) // Ensure text does not wrap
         }
     }
     
