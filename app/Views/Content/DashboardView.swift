@@ -66,7 +66,7 @@ struct DashboardView: View {
 //                        .padding(.horizontal)
 //                        .frame(height: cellHeight)
 //                        .background(cellBackground)
-//                    
+//
 //                    Button("Wyślij") {
 //                        Task {
 //                            await SdkClient.shared.sendToApi(cos: cos)
@@ -89,6 +89,14 @@ struct DashboardView: View {
             }
             .refreshable {
                 // Miejsce na ewentualne odświeżanie
+            }
+            .onAppear(){
+                Task {
+                    await SdkClient.shared.sendRegister { response in
+                         
+                        print("Zarejestrowano")
+                    }
+                }
             }
         } else {
             VStack {

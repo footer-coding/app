@@ -55,13 +55,7 @@ struct ShopView: View {
                             selectedOption = 1
                         }
                         
-                        RadioButton(id: 2, label: "Buy unlimited military units - 40zł", isSelected: selectedOption == 2) {
-                            selectedOption = 2
-                        }
-                        
-                        RadioButton(id: 3, label: "Set of both - 120zł", isSelected: selectedOption == 3) {
-                            selectedOption = 3
-                        }
+                       
                     }
                     
                     Section {

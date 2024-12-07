@@ -284,4 +284,136 @@ extension SdkClient {
             }
         }
     }
-}
+    @MainActor public func checkPlayStatus(completion: @escaping (Bool) -> Void) {
+        let urlString: String = "\(SdkClient.shared.API_URL)/play"
+        print(urlString)
+        
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL: \(urlString)")
+            completion(false)
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        Task {
+            do {
+                let tokenOptions = Session.GetTokenOptions(template: "JWT")
+                print(tokenOptions)
+                
+                if let token = try await Clerk.shared.session?.getToken(tokenOptions)?.jwt {
+                    print(token)
+                    request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+                }
+                
+                let (data, response) = try await URLSession.shared.data(for: request)
+                
+                if let httpResponse = response as? HTTPURLResponse {
+                    print("HTTP Response Status Code: \(httpResponse.statusCode)")
+                    if httpResponse.statusCode == 200 {
+                        completion(true)
+                    } else {
+                        completion(false)
+                    }
+                }
+                
+                
+                
+                
+                
+                
+            } catch {
+                print("Error: \(error)")
+                completion(false)
+            }
+        }
+    }
+        @MainActor public func sendRegister(completion: @escaping (Bool) -> Void) {
+            let urlString: String = "\(SdkClient.shared.API_URL)/register"
+            print(urlString)
+            
+            guard let url = URL(string: urlString) else {
+                print("Invalid URL: \(urlString)")
+                completion(false)
+                return
+            }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "GET"
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+            
+            Task {
+                do {
+                    let tokenOptions = Session.GetTokenOptions(template: "JWT")
+                    print(tokenOptions)
+                    
+                    if let token = try await Clerk.shared.session?.getToken(tokenOptions)?.jwt {
+                        print(token)
+                        request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+                    }
+                    
+                    let (data, response) = try await URLSession.shared.data(for: request)
+                    
+                    if let httpResponse = response as? HTTPURLResponse {
+                        print("HTTP Response Status Code: \(httpResponse.statusCode)")
+                        if httpResponse.statusCode == 200 {
+                            completion(true)
+                        } else {
+                            completion(false)
+                        }
+                    }
+                    
+                } catch {
+                    print("Error: \(error)")
+                    completion(false)
+                }
+            }
+        }
+    @MainActor public func sentUnits(completion: @escaping ([String: Any]) -> Void) {
+        let urlString: String = "\(SdkClient.shared.API_URL)/register"
+        print(urlString)
+        
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL: \(urlString)")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        Task {
+            do {
+                let tokenOptions = Session.GetTokenOptions(template: "JWT")
+                print(tokenOptions)
+                
+                if let token = try await Clerk.shared.session?.getToken(tokenOptions)?.jwt {
+                    print(token)
+                    request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+                }
+                
+                let (data, response) = try await URLSession.shared.data(for: request)
+                
+                if let httpResponse = response as? HTTPURLResponse {
+                    print("HTTP Response Status Code: \(httpResponse.statusCode)")
+                }
+                guard let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+                    print("Failed to parse JSON response")
+                    
+                    return
+                }
+                
+                print("Success: \(json)")
+                
+                completion(json)
+                
+            } catch {
+                print("Error: \(error)")
+                
+            }
+        }
+    }
+    }
+

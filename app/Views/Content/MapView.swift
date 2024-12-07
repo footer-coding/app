@@ -1,5 +1,6 @@
 import SwiftUI
 import MapKit
+import sdk
 
 enum MapItem: Identifiable {
     case checkpoint(Checkpoint)
@@ -83,6 +84,7 @@ struct MapView: View {
     @State private var amount = 1
     @State private var timer: Timer?
     @State private var showControls = false
+    
     
     private let maxZoomOutDelta: CLLocationDegrees = 180.0 // Maximum zoom out level
     

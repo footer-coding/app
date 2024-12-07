@@ -1,8 +1,15 @@
 import SwiftUI
+import ClerkSDK
+import sdk
+import AppNotifications
 
 struct ManageView: View {
     // Define custom color for blue
     let customBlue = Color(red: 46 / 255, green: 142 / 255, blue: 206 / 255)
+    @State private var canPlay = false
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+    @State private var navigateToMap = false
     
     var body: some View {
         NavigationView {
@@ -22,7 +29,24 @@ struct ManageView: View {
                         .foregroundColor(customBlue)
                         .padding(.top, 20)
                     
-                    NavigationLink(destination: MapView()) {
+                    NavigationLink(destination: MapView(), isActive: $navigateToMap) {
+                        EmptyView()
+                    }
+                    
+                    Button(action: {
+                        Task {
+                            try await SdkClient.shared.checkPlayStatus { success in
+                                if success {
+                                    AppNotifications.shared.notification = .init(success: "Masz pelna wersje")
+                                    navigateToMap = true
+                                } else {
+                                    AppNotifications.shared.notification = .init(error: "Nie masz pelnej wersji")
+                                    alertMessage = "Nie masz pelnej wersji"
+                                    showAlert = true
+                                }
+                            }
+                        }
+                    }) {
                         HStack {
                             Image(systemName: "map.fill")
                                 .font(.title)
@@ -41,6 +65,9 @@ struct ManageView: View {
                         .cornerRadius(15)
                         .shadow(color: customBlue.opacity(0.4), radius: 10, x: 0, y: 5)
                         .padding(.horizontal)
+                    }
+                    .alert(isPresented: $showAlert) {
+                        Alert(title: Text("Play Status"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
                     }
                     
                     NavigationLink(destination: ShopView()) {
