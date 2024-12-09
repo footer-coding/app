@@ -1,6 +1,7 @@
 import SwiftUI
 import MapKit
 import sdk
+import AppNotifications
 
 enum MapItem: Identifiable {
     case checkpoint(Checkpoint)
@@ -83,8 +84,10 @@ struct MapView: View {
     @State private var addingCheckpoints = false
     @State private var amount = 1
     @State private var timer: Timer?
+    @State private var notificationTimer: Timer?
     @State private var showControls = false
     
+    @State private var showNotifications = false
     
     private let maxZoomOutDelta: CLLocationDegrees = 180.0 // Maximum zoom out level
     
@@ -273,8 +276,8 @@ struct MapView: View {
                             }
                             
                             HStack {
-                                controlButton(title: "Start", action: { startMoving(); showControls = false }, textColor: .green)
-                                controlButton(title: "Stop", action: { stopMoving(); showControls = false }, textColor: .red)
+                                controlButton(title: "Start", action: { startMoving(); showControls = false; showNotifications.toggle() }, textColor: .green)
+                                controlButton(title: "Stop", action: { stopMoving(); showControls = false; showNotifications.toggle() }, textColor: .red)
                             }
                         }
                         .background(Color.white)
@@ -284,6 +287,13 @@ struct MapView: View {
                     }
                 }
             }
+        }
+        .onAppear {
+            startMoving()
+            scheduleRandomNotifications()
+        }
+        .onDisappear() {
+            showNotifications = false
         }
     }
     
@@ -346,6 +356,8 @@ struct MapView: View {
         addingCheckpoints = false
         timer?.invalidate()
         timer = nil
+        notificationTimer?.invalidate()
+        notificationTimer = nil
     }
     
     private func convertToCoordinate(from point: CGPoint, in region: MKCoordinateRegion) -> CLLocationCoordinate2D {
@@ -429,6 +441,21 @@ struct MapView: View {
         let newLon = current.longitude + lonDiff * step
         
         return CLLocationCoordinate2D(latitude: newLat, longitude: newLon)
+    }
+    
+    private func scheduleRandomNotifications() {
+        notificationTimer?.invalidate()
+        notificationTimer = Timer.scheduledTimer(withTimeInterval: Double.random(in: 3...12), repeats: true) { _ in
+            if Bool.random() {
+                if (showNotifications) {
+                    AppNotifications.shared.notification = .init(success: "Enemy soldier killed")
+                }
+            } else {
+                if (showNotifications) {
+                    AppNotifications.shared.notification = .init(error: "Your soldier killed")
+                }
+            }
+        }
     }
 }
 
